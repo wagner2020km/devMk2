@@ -1,0 +1,193 @@
+
+
+.containerAcessoSaldo {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	padding-top: 30px;
+	
+}
+
+.contentdataForm{
+	
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	//justify-content: center;
+	//align-items: center;
+	padding: 1rem 1rem 1rem;
+
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+	margin-bottom: 2rem;
+}
+.iputGroup{
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+   
+    //color: var(--COLORFONTES_WHITE);
+}
+
+.titleContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+
+	padding-bottom: 1rem;
+}
+.contentDetalhes{
+	width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contentItendsDetalhes{
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	padding-top: 16px;
+   // justify-content: space-around;
+   // align-items: center;
+
+}
+
+
+.descricaoSpanDowloader{
+    font-weight: bold;
+	font-size: 18px;
+    color: var(--COLORFONTES_GRAY_MEDIUM);
+	padding-right: 5px;
+}
+.contentItendsDowloader{
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	padding-top: 16px;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.descricaoSaidaSpan{
+	color: var(--BACKGOUND_WARNING);
+	padding-right: 16px;
+	font-weight: bold;
+	font-size: var(--SMALL);
+}
+.descricaoEntradaSpan{
+	color: var(--COLORFONTES_GREEN_900);
+	padding-right: 16px;
+	font-weight: bold;
+	font-size: var(--SMALL);
+}
+
+.descricaoValorSpan{
+	color: var(--COLORFONTES_GRAY_500);
+	font-weight: bold;
+	font-size: var(--SMALL);
+}
+   
+
+.containerInut{
+   
+    width: 100%;
+    padding: 0.5rem;  
+}
+
+.containerInutPaginacao{
+    width: 15%;
+    padding: 0.5rem; 
+}
+
+
+.labelInputForm{
+    margin-bottom: 100px;
+   
+}
+
+.labelError{
+    color: var(--COLORFONTES_RED_FULL);
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+    height: 1rem;
+    //font-weight: bold;
+    font-size: 14px;
+}
+
+.containerListAcount{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    //background-color: var(--BACKGOUND_WHITE);
+    margin-top: 2rem;
+    
+    border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	padding: 1rem;
+
+    p{
+        font-weight: bold;
+    }
+	
+}
+
+.containerDataList{
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+	align-items: center;
+    background-color: var(--BACKGOUND_WHITE);
+	
+}
+
+.paginationContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.containerDetailsPagination{
+    width: 100%;
+    padding-left: 2rem;
+}
+
+.containerLinkPagination{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+	//flex-direction: column;
+
+	.iputGroup{
+		flex-direction: column;
+	   }
+	.containerAcessoSaldo {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 30px 30px 0px;
+		background-color: #f8fafc;
+	}
+
+	.contentDetalhes{
+		flex-direction: column;
+	}
+	
+}
+

@@ -1,0 +1,12 @@
+.cardUser {
+	width: 50%;
+	@media (max-width: 600px) {
+		width: 100%;
+	}
+}
+
+.fontNomeUser {
+	font-size: 2rem;
+	font-weight: 700;
+	font-family: 'Roboto', sans-serif;
+}

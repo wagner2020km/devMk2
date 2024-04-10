@@ -1,0 +1,43 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+    },
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": false,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"incremental": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"project": "./tsconfig.json",
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.js",
+		"**/*.ts",
+		"**/*.tsx",
+		"svg.d.ts",
+		"**/*.svg",
+		"**/*.png",
+		"**/*.jpg",
+		"**/*.jpeg",
+		"**/*.gif",
+		".eslintrc.js",
+		"src/**/*",
+	],
+	"exclude": [
+		"node_modules"
+	],
+}

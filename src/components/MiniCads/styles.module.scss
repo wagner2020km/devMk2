@@ -1,0 +1,79 @@
+.containerCard {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 10px;
+}
+
+.cards {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	border-radius: 8px;
+	width: 60px;
+	height: 62px;
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGOUND_MINICARD);
+	margin-bottom: 0.5rem;
+}
+
+.cardsDisabled {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	border-radius: 8px;
+	width: 60px;
+	height: 62px;
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGOUND_MYCARDS_DISABLED);
+	margin-bottom: 0.5rem;
+	cursor: none;
+}
+
+.nomeIcone {
+	font-size: var(--XG_SMALL);
+	font-weight: bold;
+	color: var(--COLORFONTES_GRAY_500);
+}
+
+.icones {
+	&:hover {
+		filter: brightness(10);
+		color: var(--COLORFONTES_BLUE_900);
+	}
+
+	svg:hover path {
+		fill: #fce57e;
+	}
+}
+
+.iconesImage {
+	size: 200px;
+}
+
+.iconesBith {
+	color: var(--COLORFONTES_BLUE_900);
+}
+
+.iconesBith:hover path {
+	fill: #fce57e;
+}
+
+.icones svg:hover path {
+	fill: #fce57e;
+}
+
+.buttomCard {
+	background-color: transparent;
+	border: 0;
+	transition: transform 0.2s;
+
+	&:hover {
+		transform: scale(0.9);
+	}
+}

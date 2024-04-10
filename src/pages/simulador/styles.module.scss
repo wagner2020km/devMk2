@@ -1,0 +1,163 @@
+
+
+.contentdataForm{
+	
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	//justify-content: center;
+	//align-items: center;
+	padding: 1rem 1rem 1rem;
+
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+	margin-bottom: 2rem;
+}
+.iputGroup{
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.iputGroupantecipacao{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+    //color: var(--COLORFONTES_WHITE);
+}
+
+.containerInut{
+   
+    width: 100%;
+    padding: 0.5rem;
+  
+}
+
+.labelInputForm{
+    margin-bottom: 100px;
+   
+}
+
+.labelError{
+    color: var(--COLORFONTES_RED_FULL);
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+    height: 1rem;
+    //font-weight: bold;
+    font-size: 14px;
+}
+
+.titleContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+
+	padding-bottom: 1rem;
+}
+.containerListAcount{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    
+    border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	padding: 1rem;
+
+    p{
+        font-weight: bold;
+    }
+	
+}
+
+.textTpo{
+    color: var(--COLORFONTES_GRAY_MEDIUM);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.textValorCliente{
+    color: var(--COLORFONTES_GREEN_900);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.textValorTaxa{
+    color: var(--COLORFONTES_RED_FULL);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.textValorLiquido{
+    color: var(--COLORFONTES_BLUE_800);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.containerDataList{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--BACKGOUND_WHITE);
+	
+}
+
+.contantAlertTable{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.paginationContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.containerDetailsPagination{
+    width: 100%;
+    padding-left: 2rem;
+}
+
+.containerLinkPagination{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+	
+	.iputGroup{
+		flex-direction: column;
+	   }
+
+       .iputGroupantecipacao{
+
+        flex-direction: column;
+
+       }
+	.containerAcessoSaldo {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 30px 30px 0px;
+		background-color: #f8fafc;
+	}
+
+	
+}
+

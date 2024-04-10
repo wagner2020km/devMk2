@@ -1,0 +1,192 @@
+.containerTransferencia {
+	padding: 1rem 1rem 0;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+
+	border: none;
+}
+
+.tituloGroup {
+	padding-bottom: 1rem;
+}
+
+.iputGroup {
+	//  width: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	// align-items: center;
+	padding-bottom: 1rem;
+	// background-color: aquamarine;
+
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.iputGroupChave {
+	//  width: 50%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 1rem;
+	// background-color: aquamarine;
+	label {
+		padding-right: 2rem;
+		font-size: var(--MEDIUM);
+	}
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.erroInputForm {
+	font-size: var(--XG_SMALL);
+	color: var(--COLORFONTES_RED_FULL);
+}
+
+
+
+.buttomSubmitDadosPix {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	button {
+		max-width: 600px;
+		width: 100%;
+		background-color: var(--BACKGOUND_BUTTOM_INFO);
+		border: 0;
+		padding: 0.4rem;
+		color: var(--COLORFONTES_WHITE);
+		border-radius: 0.5rem;
+		transition: filter 0.2s;
+		margin-top: 1rem;
+	}
+}
+
+.alertstyle {
+	padding-bottom: 1rem;
+}
+
+.titluloDadosRecebimento {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem 0 0;
+}
+
+.modalContainerSucesso {
+	min-width: 400px;
+	position: fixed;
+	left: 40%;
+	top: 5%;
+	border: 1px solid var(--COLORFONTES_GRAY_200);
+	background-color: var(--BACKGOUND_WHITE);
+	padding: 0px;
+}
+.recebeContainerModal{
+	text-align: center;
+	overflow:auto; 
+  }
+.headerModal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 145px;
+	background-color: var(--BACKGROUND_HEADER);
+}
+
+
+.tituloSucesso {
+	padding: 0.5rem;
+
+	h1 {
+		text-align: center;
+		padding-top: 0.5rem;
+	}
+	h4 {
+		padding-top: 0.5rem;
+	}
+}
+
+.dadosDetalhesPagamento {
+	margin-left: 10%;
+	width: 80%;
+	background-color: var(--BACKGOUND_WHITE);
+	// border: 1px solid var(--COLORFONTES_GRAY_200);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
+	position: relative;
+	z-index: 10;
+	margin-top: -27px !important;
+}
+
+.inconePaymentSucces {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.detalhamentoComprovante {
+	text-align: center;
+	h4 {
+		padding: 0.5rem;
+	}
+
+	p {
+		padding-bottom: 0.5rem;
+	}
+}
+
+.containerbuttomCadastraChavePix {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 2rem;
+	button {
+		max-width: 600px;
+		width: 100%;
+
+		border: 0;
+		padding: 0.4rem;
+		color: var(--COLORFONTES_WHITE);
+		border-radius: 0.5rem;
+		transition: filter 0.2s;
+		margin-top: 1rem;
+	}
+}
+
+.containerBtnCadastrar {
+	background-color: var(--BACKGOUND_BUTTOM_INFO);
+}
+
+.containerBtnCancelar {
+	background-color: var(--BACKGOUND_DANGER);
+}
+.formValidaEmailPix {
+	padding-top: 1rem;
+}
+
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+
+   
+	.modalContainerSucesso{
+        left: 0;
+      
+      }
+
+      .recebeContainerModal{
+        overflow-y: scroll;
+      }
+	
+  }
+

@@ -1,0 +1,163 @@
+.containerHeader {
+  position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	max-height: 70px;
+	flex-direction: row;
+	flex-wrap: wrap;
+	background-color: var(--BACKGROUND_HEADER);
+	border: none;
+	z-index: 1000;
+}
+
+.containerEsquerdo {
+	width: 60%;
+	padding: 8px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	@media only screen and (max-width: 963px) and (min-width: 100px) {
+		width: 40%;
+	}
+}
+
+.containerLogo {
+	margin-right: 5px;
+}
+
+.containerInput {
+	flex: 1;
+	align-items: center;
+}
+.inputHeader {
+	width: 100%;
+	height: 40px;
+
+	border: 0;
+	border-radius: 0.5rem;
+	background-color: var(--BACKGROUND_HEADER);
+	color: var(--COLORFONTES_WHITE);
+	padding: 1rem;
+	border: 1px solid var(--COLORFONTES_GRAY_200);
+}
+
+.inputHeader::placeholder {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.containerDireito {
+	width: 40%;
+	padding-right: 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: right;
+	min-height: 62px;
+	max-height: 62px;
+	@media only screen and (max-width: 963px) and (min-width: 100px) {
+		width: 60%;
+	}
+}
+
+.containerSaldo {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: right;
+	padding-right: 10px;
+	color: var(--COLORFONTES_WHITE);
+
+	input {
+		background-color: var(--BACKGROUND_HEADER);
+		border: 0;
+		text-align: end;
+
+		color: var(--COLORFONTES_WHITE);
+	}
+
+	label {
+		font-size: var(--XG_SMALL);
+		padding-bottom: 0.3rem;
+	}
+}
+
+.iconeSaldo {
+	padding-top: 0.7rem;
+	color: var(--COLORFONTES_WHITE);
+	padding-right: 0.5rem;
+}
+
+.divImgLogo {
+	width: 80%;
+	height: 80%;
+	@media only screen and (max-width: 963px) and (min-width: 100px) {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.containerMenuAcoes {
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--X_SMALL);
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.selectAcoes {
+	background-color: var(--BACKGROUND_HEADER);
+	border: 0;
+	color: var(--COLORFONTES_WHITE);
+}
+
+.containerchat {
+	padding-top: 0.7rem;
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGROUND_HEADER);
+	padding-right: 10px;
+}
+
+.buttomIcon {
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGROUND_HEADER);
+	border: 0;
+
+}
+
+.containerIcon {
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGROUND_HEADER);
+	border: 0;
+	cursor: pointer;
+}
+
+.textCadastrese {
+	margin-top: 1rem;
+	color: var(--COLORFONTES_WHITE);
+	cursor: pointer;
+}
+
+.containerConfig {
+	padding-top: 0.7rem;
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGROUND_HEADER);
+}
+
+.nameCliente{
+	font-size: 16px;
+}
+
+.divImgAvatar{
+	width: 45px;
+	height: 45px;
+}
+
+.fade {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fadeActive {
+  opacity: 1;
+}

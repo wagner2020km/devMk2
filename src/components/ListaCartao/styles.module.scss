@@ -1,0 +1,76 @@
+.listCard{
+    width: 100%;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   align-items: center;
+   padding: 2rem;
+ 
+    border-bottom: 0.1rem solid;
+
+    
+     @media only screen and (max-width: 1002px) and (min-width: 100px)  {
+       flex-wrap: wrap;
+     }
+}
+
+.resumoFatura{
+    display: inline;
+}
+
+.saldoFatura{
+   
+    color: var(--COLORFONTES_BLUE_900);
+    padding: 0.5rem 0 0.5rem;
+    font-weight: bold;
+    span{
+        color: var(--COLORFONTES_BLACK_FULL);
+        font-size: var(--XG_SMALL);
+       
+    }
+}
+
+.limiteCartao{
+
+    color: var(--COLORFONTES_BLACK_FULL);
+  
+    padding-bottom: 0.5rem;
+  
+    span{
+        color: var(--COLORFONTES_BLACK_FULL);
+        font-weight: bold;
+        font-size: var(--SMALL);
+       
+    }
+}
+
+.linkFaturaRef{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-top: 0.5rem;
+
+    p{
+        color: var(--COLORFONTES_BLUE_900);
+        font-weight: bold;
+        transition: color 0.5s;
+        padding-right: 0.5rem;
+
+        &:hover{
+            filter: brightness(10);
+            color: var(--COLORFONTES_BLUE_900);
+        }
+    }
+}
+
+.acoescartao{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    @media only screen and (max-width: 1002px) and (min-width: 100px)  {
+        flex-wrap: wrap;
+      }
+}

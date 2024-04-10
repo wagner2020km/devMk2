@@ -1,0 +1,37 @@
+.containerRodape {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+	margin-top: 5%;
+	width: 95%;
+	justify-content: space-between;
+  background-color: var(--BACKGOUND_THEME);
+}
+
+.logo {
+  margin-bottom: 2rem;
+}
+
+.dadosContatos {
+	font-size: 13px;
+	color: var(--COLORFONTES_GRAY_500);
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.containerChate {
+	font-size: 13px;
+  text-align: center;
+	color: var(--COLORFONTES_GRAY_500);
+}
+
+.chate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.imgNotificacao {
+  margin-bottom: 1rem;
+}

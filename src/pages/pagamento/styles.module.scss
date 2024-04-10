@@ -1,0 +1,291 @@
+
+
+.divInputCoudBar{
+	width: 100%;
+	padding-top: 1rem;
+	
+}
+.inputCoudBar{
+	width: 250px;
+	
+}
+.containerTransferencia {
+	display: flex;
+	flex-direction: row;
+	//justify-content: flex-start;
+	justify-content: space-around;
+	padding-top: 30px;
+
+	
+}
+
+.titleContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-bottom: 1rem;
+	h3 {
+		padding-left: 0.5rem;
+	}
+}
+
+.cardLeft {
+	width: 100%;
+	//  background-color: aqua;
+}
+
+.cardRigth {
+	width: 100%;
+	//  background-color: aqua;
+	padding-left: 1rem;
+}
+
+.cardTransferencia {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	height: 100%;
+	padding: 2rem 2rem 2rem;
+
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+	margin-bottom: 2rem;
+
+	
+}
+
+
+
+
+
+
+.modalContainer{
+	//min-width: 400px;
+	position: absolute;
+	//top: 200px;
+	//left: 200px;
+	//right: 200px;
+	//bottom: 200px;
+	//height: 100%;
+	margin-top: 10px;
+	top: 5%;
+	left: 30%;
+	right: 30%;
+	bottom: 10%;
+	border: 1px solid var(--COLORFONTES_GRAY_200);
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 20px;
+	padding: 0px;
+  
+  }
+  
+  .containerModalPix{
+  
+	width: 100%;
+	height: 100;
+	min-width: 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+  }
+  
+  .containerbuttomEnviarPix{
+	
+	width: 70%;
+	
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+  
+  
+	padding-bottom: 1rem;
+  
+	@media (max-width: 1002px) {
+		  min-width: 90%;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: center;
+	  }
+  }
+  
+  
+  
+  .buttomSubmitDadosPix{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  
+	button{
+	  max-width: 600px;
+	  width: 100%;
+  background-color: var(--BACKGOUND_BUTTOM_INFO);
+  border: 0;
+  padding: 0.4rem;
+  color: var(--COLORFONTES_WHITE);
+  border-radius: 0.5rem;
+  transition: filter 0.2s;
+  margin-top: 1rem;
+  
+	}
+  }
+  
+  .alertstyle{
+	padding-bottom: 1rem;
+  }
+  
+  
+  
+  .titluloDadosRecebimento{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem 0 0;
+  }
+  
+  .containerInputCodigo{
+	display: flex;
+	align-items: center;
+  flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	padding-bottom: 1rem;
+  
+  
+  
+	  @media (max-width: 1002px) {
+		  min-width: 90%;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: center;
+	  }
+  }
+  
+  
+  .input {
+	  margin-top: 1rem;
+	  height: 40px;
+	  border: 0;
+   width: 50%;
+	  border-radius: 0.5rem;
+	  background-color: var(--BACKGOUND_ACTIONS);
+	  color: var(--COLORFONTES_WHITE);
+	  padding: 1rem;
+	  border: 1px solid var(--COLORFONTES_GRAY_200);
+	  @media (min-width: 768px) {
+		  min-width: 150px;
+	  }
+	  @media (max-width: 767px) {
+		  min-width: 90%;
+	  }
+  }
+  
+  .alertErroCelcoin{
+	padding-top: 1rem;
+  }
+	  .modalContainerSucesso{
+	   
+		  min-width: 400px;
+		  position: absolute;
+	   
+		  //top: 200px;
+		  //left: 200px;
+		  //right: 200px;
+		  //bottom: 200px;
+		 
+		  top: 5%;
+		  left: 30%;
+		  right: 35%;
+		
+		  border: 1px solid var(--COLORFONTES_GRAY_200);
+		  background-color: var(--BACKGOUND_WHITE);
+	  
+		  padding: 0px;
+	  
+	  }
+  
+  
+	  .headerModal{
+		
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 145px;
+		background-color: var(--BACKGROUND_HEADER);
+	   
+	  }
+  
+	 
+	  .tituloSucesso{
+		padding: 0.5rem;
+		justify-content: center;
+		align-items: center;
+  
+		h1{
+		  text-align: center;
+		  padding-top: 0.5rem;
+		}
+		h4{
+		  padding-top: 0.5rem;
+		}
+	  }
+  
+	  .dadosDetalhesPagamento{
+		margin-left: 10%;
+		width: 80%;
+		background-color: var(--BACKGOUND_WHITE);
+	   // border: 1px solid var(--COLORFONTES_GRAY_200);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 20px;
+		position: relative;
+		z-index: 10;
+		margin-top: -27px !important;
+	  }
+  
+	  .inconePaymentSucces{
+	   
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	  }
+  
+	  .detalhamentoComprovante{
+	
+	   text-align: center;
+	   h4{
+		padding: 0.5rem;
+	   }
+  
+	   p{
+		padding-bottom: 0.5rem;
+	   }
+	  }
+
+	  @media only screen and (max-width: 1002px) and (min-width: 100px) {
+	
+		.containerTransferencia{
+			flex-direction: column;
+		}
+
+		.cardRigth{
+			padding-top: 5rem;
+			margin-bottom: 4rem;
+			padding-left: 0;
+		}
+
+		.titleContainer{
+			justify-content: center;
+			align-items: center;
+		
+		}
+	}
+	

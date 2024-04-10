@@ -1,0 +1,23 @@
+import React from 'react';
+
+const SetaExtrato = (props) => {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width={props.size ? props.size : '4.181'}
+			height={props.size ? props.size : '7.27'}
+			viewBox="0 0 4.181 7.27"
+		>
+			<g id="arrow-right-bold" transform="translate(-15.002 -4.03)">
+				<path
+					id="Caminho_22"
+					data-name="Caminho 22"
+					d="M15.162,4.19a.546.546,0,0,0,0,.772l2.7,2.7-2.7,2.7a.546.546,0,1,0,.772.772l3.089-3.089a.546.546,0,0,0,0-.772L15.934,4.19A.546.546,0,0,0,15.162,4.19Z"
+					fill={props.color ? props.color : '#d4d4d4'}
+				/>
+			</g>
+		</svg>
+	);
+};
+
+export default SetaExtrato;

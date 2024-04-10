@@ -1,0 +1,26 @@
+.containerDadosUser {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-bottom: 1.5rem;
+}
+
+.bemVindo {
+	display: flex;
+	flex-direction: row;
+}
+
+.divImgLogo {
+	width: 30px;
+	height: 30px;
+	margin-right: 15px;
+}
+
+.nomeUsuario {
+	font-size: var(--SMALL);
+	color: var(--COLORFONTES_BLUE_800);
+}
+
+.comprimentos {
+	font-size: var(--XG_SMALL);
+}

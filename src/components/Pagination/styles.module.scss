@@ -1,0 +1,50 @@
+.containerLinkPagination {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+
+	ul {
+		text-decoration: none;
+	}
+	li {
+		text-decoration: none;
+	}
+}
+
+.buttomNumberPages {
+	width: 25px;
+	height: 25px;
+	border-radius: 6px;
+	border: none;
+	background-color: var(--BACKGOUND_BUTTOM_SUCCESS);
+	color: var(--COLORFONTES_WHITE);
+}
+
+.buttomNumberPagesdisabled {
+	width: 25px;
+	height: 25px;
+	border-radius: 6px;
+	border: none;
+	cursor: none;
+	background-color: var(--BACKGOUND_SUCCESS);
+	color: var(--COLORFONTES_WHITE);
+}
+
+.numberPages {
+	padding: 2px;
+}
+
+.buttomBackNextPage {
+	margin: 1rem;
+	padding: 0.5rem;
+	border: none;
+}
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+
+	.containerLinkPagination{
+		flex-direction: column;
+	}
+}

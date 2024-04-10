@@ -1,0 +1,81 @@
+.containerCenter {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: var(--BACKGOUND_THEME);
+}
+
+.linkStyle {
+  margin-top: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--COLORFONTES_BLUE_700);
+	text-align: center;
+}
+
+.rowStyle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20;
+}
+
+.input {
+	margin-top: 1rem;
+	height: 40px;
+	border: 0;
+	border-radius: 0.5rem;
+	background-color: var(--BACKGOUND_ACTIONS);
+	color: var(--COLORFONTES_WHITE);
+	padding: 1rem;
+	border: 1px solid var(--COLORFONTES_GRAY_200);
+	@media (min-width: 768px) {
+		min-width: 300px;
+	}
+	@media (max-width: 767px) {
+		min-width: 90%;
+	}
+}
+
+.input::placeholder {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.labelError {
+	color: var(--COLORFONTES_RED_ERROR);
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+}
+
+.labelAlert {
+	color: var(--BACKGOUND_WARNING);
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+}
+
+.labelSuccess {
+	color: var(--BACKGOUND_SUCCESS);
+	font-size: 1.3rem;
+	margin-top: 0.5rem;
+	text-align: justify;
+	max-width: 250px;
+}
+
+.labelComment {
+	color: var(--BACKGOUND_SUCCESS);
+	font-size: 0.95rem;
+	margin-top: 0.5rem;
+	text-align: justify;
+	max-width: 250px;
+}
+
+.labelSocio {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+	color: var(--COLORFONTES_WHITE);
+	text-align: center;
+}

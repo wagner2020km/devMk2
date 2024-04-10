@@ -1,0 +1,80 @@
+.contantListarContas{
+  padding: 0;
+  margin-top: 3rem
+}
+
+.headerTable{
+  width: 100%;
+  flex-wrap: wrap;
+	display: flex;
+  justify-content: space-around;
+  align-items: center;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 5px 8px;
+}
+
+.itensTable{
+  padding-bottom:0;
+  
+}
+
+.tabelaListarcontas{
+  width: 100%;
+
+  thead{
+
+    width: 100%;
+    background-color: var(--COLORFONTES_BLUEDARK);
+    color: var(--COLORFONTES_WHITE);
+    
+    flex-direction: row;
+  }
+
+
+}
+
+.tdNome{
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.tdGeral{
+  width: 15%;
+  text-align: center;
+}
+
+.sectionForm{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputGroupForm{
+  width: 100%;
+  padding: 0 0.5rem;
+
+}
+
+.selectInput{
+  padding-top: 1rem;
+}
+
+.buttomform{
+  margin-top: 2rem;
+}
+
+.formContafisica{
+  padding-bottom: 2rem;
+}
+
+.containerLinkPagination{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width:50%;
+
+}

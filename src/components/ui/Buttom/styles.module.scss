@@ -1,0 +1,134 @@
+.buttom {
+  max-width: 600px;
+  width: 100%;
+  background-color: var(--BACKGOUND_BUTTOM_INFO);
+  border: 0;
+  padding: 0.4rem;
+  color: var(--COLORFONTES_WHITE);
+  border-radius: 0.5rem;
+  transition: filter 0.2s;
+  margin-top: 1rem;
+
+  &[disabled] {
+    cursor: not-allowed;
+    svg {
+      animation: animate 2s infinite;
+    }
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+.buttomsucces {
+  max-width: 600px;
+  width: 100%;
+  background-color: var(--BACKGOUND_SUCCESS);
+  border: 0;
+  padding: 0.4rem;
+  color: var(--COLORFONTES_WHITE);
+  border-radius: 0.5rem;
+  transition: filter 0.2s;
+  margin-top: 1rem;
+
+  &[disabled] {
+    cursor: not-allowed;
+    svg {
+      animation: animate 2s infinite;
+    }
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+.buttomdisabled {
+  max-width: 600px;
+  width: 100%;
+  background-color: var(--BACKGOUND_GRAY_100);
+  border: 0;
+  padding: 0.4rem;
+  color: var(--COLORFONTES_WHITE);
+  border-radius: 0.5rem;
+  transition: filter 0.2s;
+  margin-top: 1rem;
+
+  &[disabled] {
+    cursor: not-allowed;
+    svg {
+      animation: animate 2s infinite;
+    }
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+.buttomDanger {
+  max-width: 600px;
+  width: 100%;
+  background-color: var(--BACKGOUND_DANGER);
+  border: 0;
+  padding: 0.4rem;
+  color: var(--COLORFONTES_WHITE);
+  border-radius: 0.5rem;
+  transition: filter 0.2s;
+
+  &[disabled] {
+    cursor: not-allowed;
+    svg {
+      animation: animate 2s infinite;
+    }
+  }
+
+  &:hover {
+    filter: brightness(1.5);
+  }
+}
+
+.buttomText {
+  color: var(--COLORFONTES_WHITE);
+}
+
+@keyframes animate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.buttonOutline {
+	max-width: 600px;
+	min-width: 300px;
+  background-color: transparent;
+  border: 2px solid var(--COLORFONTES_GRAY_500);
+  padding: 0.4rem;
+  color: var(--COLORFONTES_WHITE);
+  border-radius: 0.5rem;
+  transition: filter 0.2s;
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    svg {
+      animation: animate 2s infinite;
+    }
+  }
+}
+
+.buttonTextOutline {
+  color: var(--COLORFONTES_WHITE);
+}

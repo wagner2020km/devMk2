@@ -1,0 +1,84 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	padding-bottom: 1.5rem;
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.containerBody {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+}
+
+.cartao {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	padding: 1rem;
+	background-color: var(--BACKGROUD_CARD_DEBIT);
+	border-radius: 0.5rem;
+}
+
+.topoCartao {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.conteudoCartao {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--XG_SMALL);
+}
+
+.rodapeCartao {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tituloRodape {
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--XG_SMALL);
+}
+
+.buttomBlock {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 1rem;
+
+	button {
+		background-color: transparent;
+		border: 0;
+		transition: color 0.7s;
+		&:hover {
+			filter: brightness(10);
+			color: var(--COLORFONTES_BLUE_900);
+		}
+	}
+}
+
+.dadosClienteCartao {
+	padding: 2rem;
+}
+
+.tituloCartao {
+	color: var(--COLORFONTES_BLACK_FULL);
+	font-size: var(--SMALL);
+	padding-bottom: 0.5rem;
+}
+
+.tituloDadosCartao {
+	color: var(--COLORFONTES_BLACK_FULL);
+	font-size: var(--SMALL);
+	padding-bottom: 1rem;
+	font-weight: bold;
+}

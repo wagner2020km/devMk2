@@ -1,0 +1,19 @@
+.button {
+	color: black;
+	font-weight: bold;
+	margin-top: 10px;
+	background-color: var(--COLORFONTES_GRAY_500);
+	border-radius: 10;
+	//transition: filter 0.2s;
+
+	&hover{
+		//filter: brightness(1.1);
+	}
+}
+
+.contanerButons{
+
+	justify-content: center;
+	align-items: center;
+}
+

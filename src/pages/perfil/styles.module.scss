@@ -1,0 +1,565 @@
+.container {
+	/*
+    display: flex;
+    flex-direction: column;
+    */
+}
+
+
+
+
+.containerBody {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	padding: 30px 30px 0px;
+	background-color: #f8fafc;
+}
+
+.containerAcessoSaldo {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	padding-top: 30px;
+}
+
+.cardSaldo {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--BACKGOUND_GRAY_100);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	padding: 1rem;
+	// width: 660px;
+	width: 100%;
+	height: 93%;
+	margin-right: 80px;
+}
+
+.dadosNameUser {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 1rem;
+	span {
+		font-size: var(--SMALL);
+	}
+
+	h4 {
+		font-size: var(--SMALL);
+		color: var(--COLORFONTES_BLUE_800);
+	}
+}
+
+
+.containerValorSaldo {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 1rem;
+	span {
+		padding-top: 6px;
+	}
+}
+
+.valorTransacaoIn{
+    color: var(--COLORFONTES_GREEN_900);
+}
+.valorTransacaoOut{
+    color: var(--COLORFONTES_RED_FULL);
+}
+.buttomIcon {
+	color: var(--BACKGOUND_BLACK_900);
+	background-color: var(--BACKGOUND_GRAY_100);
+	border: 0;
+	padding-left: 0.5rem;
+}
+
+.buttomIconExtrato {
+	width: 200px;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	border-radius: 8px;
+	background-color: var(--BACKGROUND_BUTTOM_INFO_2);
+	color: var(--COLORFONTES_WHITE);
+	border: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.cardAcessoRapido {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	padding-bottom: 1rem;
+	// background-color: var(--BACKGOUND_BLACK_900);
+}
+
+.containerCardAcesso {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	padding-bottom: 1rem;
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	margin-bottom: 2rem;
+
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.divTextAcesso {
+	padding-bottom: 1rem;
+}
+
+.menuCenter {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	padding-bottom: 1rem;
+}
+.containerOptLeft {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding-right: 16px;
+	
+}
+
+.containerOptRigth {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	//padding-left: 16px;
+	
+	
+}
+
+.titlePixIcon {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+
+	padding-bottom: 1rem;
+}
+
+.dataOptionLeft {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	padding-bottom: 1rem;
+	padding-top: 1rem;
+	background-color: var(--BACKGROUND_CARD_INICIAL);
+	width: 100%;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 00.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.dataOptionRigth {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	padding-top: 1.5rem;
+	background-color: var(--BACKGOUND_WHITE);
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 00.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+.textcodigoBarra {
+	padding-left: 32px;
+	padding-bottom: 1.5rem;
+	font-size: var(--XG_SMALL);
+}
+
+.onptionPix {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGROUND_CARD_INICIAL_2);
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+.textOptionchaves {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.textOptionlimit {
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.dividader {
+	width: 2px;
+	height: 100%;
+	background-color: var(--BACKGOUND_THEME);
+}
+
+.linkOptionsPix {
+	&:hover {
+		filter: brightness(10);
+		color: var(--COLORFONTES_GRAY_500);
+	}
+}
+
+.iconeInput {
+	height: 1.5rem;
+	width: 1.5rem;
+	padding-right: 2rem;
+	position: relative;
+	// background-color: red;
+	//  padding: 4px;
+	// position: absolute;
+	// box-sizing:border-box;
+	top: 6%;
+	right: 14%;
+	// transform: translateY(-50%);
+}
+
+.inputPagar {
+	height: 50px;
+	width: 80%;
+	border-radius: 0.5rem;
+
+	box-sizing: border-box;
+	padding-left: 1.5rem;
+}
+
+.containerInputPagar {
+	width: 100%;
+	padding-left: 16px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	padding-bottom: 0.6rem;
+}
+
+//////////  CONTAINER DOIS ///////////////////////
+
+.containerBodyTwo {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+}
+
+.listadeTransacoes {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	padding-bottom: 2rem;
+	border-bottom: solid;
+	border-color: var(--BACKGOUND_GRAY_100);
+	border-width: 2px;
+	padding-top: 1rem;
+}
+
+.cardDadosTransacoes {
+	padding-left: 2rem;
+	padding-right: 2rem;
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	padding-bottom: 1rem;
+}
+
+.dadosTransacao {
+	padding-left: 1rem;
+}
+
+.cardOne {
+	width: 100%;
+}
+
+.tituloCard {
+	padding-bottom: 1.5rem;
+}
+
+.carTwo {
+	width: 100%;
+	padding-left: 5%;
+}
+
+.cardMeusCartoes {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	padding: 1rem 1rem 0.5rem;
+	background-color: var(--BACKGROUND_CARD_INICIAL_3);
+
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 00.5rem;
+
+	//@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		//flex-wrap: wrap;
+	//}
+}
+
+.cartao {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	padding: 1rem;
+	background-color: var(--BACKGROUD_CARD_DEBIT);
+	border-radius: 0.5rem;
+}
+
+.topoCartao {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.conteudoCartao {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--XG_SMALL);
+}
+
+.rodapeCartao {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tituloRodape {
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--XG_SMALL);
+}
+
+.dadosClienteCartao {
+	padding: 1rem;
+}
+
+.tituloCartao {
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--SMALL);
+	padding-bottom: 0.5rem;
+}
+
+.tituloDadosCartao {
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--SMALL);
+	padding-bottom: 1rem;
+	font-weight: bold;
+}
+
+.cardBloqueiaCartao {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 1rem 0.6rem;
+	background-color: var(--BACKGROUND_CARD_INICIAL_2);
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+.containerBloqueio {
+	width: 200px;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	p {
+		padding-left: 1rem;
+		color: var(--COLORFONTES_WHITE);
+		font-size: var(--XG_SMALL);
+		&:hover {
+			filter: brightness(1);
+			color: var(--COLORFONTES_GRAY_200);
+		}
+	}
+}
+
+.buttomIconBloqueio {
+	color: var(--COLORFONTES_WHITE);
+	background-color: var(--BACKGROUND_CARD_INICIAL_2);
+	border: 0;
+}
+
+.containerDetalhes {
+	color: var(--COLORFONTES_WHITE);
+	p {
+		padding-left: 1rem;
+		color: var(--COLORFONTES_WHITE);
+		font-size: var(--XG_SMALL);
+		font-weight: bold;
+		&:hover {
+			filter: brightness(1);
+			color: var(--COLORFONTES_GRAY_200);
+		}
+	}
+}
+
+.carTree {
+	width: 100%;
+	padding-left: 1rem;
+}
+
+.cardParaVc {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+
+	padding: 1rem 1rem 1.8rem;
+	background-color: var(--BACKGROUND_CARD_INICIAL_3);
+
+	border-radius: 0.5rem;
+
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.cardTextos {
+	width: 100%;
+	padding: 1.5rem;
+}
+
+.tituloParaVc {
+	color: var(--COLORFONTES_WHITE);
+	font-size: var(--SMALL);
+	font-weight: bold;
+}
+
+.descricaoParaVc {
+	width: 100%;
+	color: var(--COLORFONTES_GRAY_100);
+	font-size: var(--SMALL);
+	padding-top: 1rem;
+	text-align: justify;
+}
+
+.imagemMkt {
+	width: 100%;
+	height: auto;
+}
+
+.input {
+	margin-top: 1rem;
+	height: 40px;
+	border: 0;
+	border-radius: 0.5rem;
+	background-color: var(--BACKGOUND_ACTIONS);
+	color: var(--COLORFONTES_WHITE);
+	padding: 1rem;
+	border: 1px solid var(--COLORFONTES_GRAY_200);
+	@media (min-width: 768px) {
+		min-width: 300px;
+	}
+	@media (max-width: 767px) {
+		min-width: 90%;
+	}
+}
+
+.input::placeholder {
+	color: rgba(255, 255, 255, 0.8);
+}
+.labelError {
+	//color: var(--COLORFONTES_RED_ERROR);
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+}
+
+.labeTitle {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+	color: var(--COLORFONTES_BLUE_800);
+	text-align: center;
+}
+
+.labelAlert {
+	color: var(--BACKGOUND_WARNING);
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+}
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+	//flex-direction: column;
+
+	.containerAcessoSaldo{
+		flex-direction: column;
+	}
+
+	.cardAcessoRapido{
+		padding-top: 1rem;
+		text-align: center;
+	}
+
+	.menuCenter{
+		flex-direction: column;
+	}
+	
+	.containerOptRigth{
+		align-items: center;
+		padding-top: 1rem;
+	}
+
+	.containerOptLeft{
+		align-items: center;
+	}
+
+	.containerBodyTwo{
+		flex-direction: column;
+		//justify-content: center;
+	}
+
+	.cardOne{
+		align-items: center;
+	}
+
+	.carTwo{
+		padding-top: 1rem;
+	}
+
+	.carTree{
+		padding-top: 1rem;
+		
+	}
+	.labelSocio {
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+		color: var(--COLORFONTES_WHITE);
+		text-align: center;
+	}
+
+}
+

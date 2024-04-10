@@ -1,0 +1,431 @@
+
+
+.containerAcessoSaldo {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	padding-top: 30px;
+	
+}
+
+.cardataLeft {
+
+}
+
+.cardRigth {
+	width: 100%;
+
+}
+
+.dadosDaConta {
+	
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;	
+}
+
+.dadosExtrato {
+	
+	
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+
+	padding: 1rem 1rem 1rem;
+
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+
+	//overflow-y: scroll;
+
+	h5 {
+		padding: 1rem;
+	}
+	
+}
+.grouprTable{
+	width: 100%;
+	//background-color: cadetblue;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.groupLinha{
+	width: 100%;
+}
+.dadosLinha{
+	width: 800px;
+	
+	//background-color: brown;
+}
+.dadosExtrato1{
+display: block;
+}
+.dadosExtrato2{
+	display: none;
+}
+.formSearchExtrato {
+	
+	
+	
+}
+.valorExtrato{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+//	background-color: red;
+}
+
+.textSuccess{
+	color: green;
+}
+.textWarning{
+	color: DarkOrange;
+}
+.textDanger{
+	color: red;
+}
+
+.conteinerTextIcon{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.cardDataIcon{
+	width: 25%;
+}
+
+.containerForm {
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	@media only screen and (max-width: 1400px) and (min-width: 800px) {
+
+		flex-direction: column;
+	}
+	
+}
+
+.containerInputDate{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+.containerButtonFormSearch{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding-top: 16px;
+	
+}
+
+.agrupaDados{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem 1rem 1rem;
+
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+	margin-bottom: 2rem;
+}
+
+.containerLinkPagination {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 50%;
+}
+
+////////////////////////////////////////////////////////////////
+
+.titleContainer {
+	display: flex;
+	flex-direction: row;
+	padding-bottom: 1rem;
+	flex-wrap: wrap;
+	h3 {
+		padding-left: 0.5rem;
+	}
+}
+
+
+
+
+
+
+
+.textoGeral {
+	font-size: var(--SMALL);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.textoGeralBold {
+	font-size: var(--SMALL);
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.textoValorSaldo {
+	font-size: var(--LARGE);
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: var(--COLORFONTES_GREEN_900);
+}
+
+
+.valorTransacaoIn {
+	color: var(--COLORFONTES_GREEN_900);
+}
+.valorTransacaoOut {
+	color: var(--COLORFONTES_RED_FULL);
+}
+
+
+.listadeTransacoes {
+	//  width:80%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	padding-bottom: 2rem;
+	border-bottom: solid;
+	border-color: var(--BACKGOUND_GRAY_100);
+	border-width: 2px;
+	padding-top: 1rem;
+}
+
+.iconLinkExtrato {
+	//  width: 20%;
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	// transition: color 0.7s;
+	&:hover {
+		.tituloTransacao {
+			font-size: xx-small;
+		}
+	}
+}
+
+.dadosTransacao {
+	display: flex;
+	justify-content: space-between;
+	padding-right: 4rem;
+	width: 100%;
+	padding-left: 1rem;
+}
+
+.carDadosExtraRigth {
+	width: 100%;
+	// background-color: blueviolet;
+}
+
+.cardsConta {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	padding: 1rem 1rem 1rem;
+
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+	margin-bottom: 2rem;
+}
+
+.iconBrasilText {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+
+	h5 {
+		padding-left: 0.5rem;
+	}
+
+	span {
+		color: var(--COLORFONTES_GREEN_600);
+	}
+}
+
+.linkContas {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	color: var(--COLORFONTES_BLUE_900);
+
+	transition: color 0.7s;
+	&:hover {
+		filter: brightness(10);
+		color: var(--COLORFONTES_GRAY_900);
+	}
+}
+
+.cardAcoes {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	padding: 1rem 0.2rem 1rem;
+
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+	margin-bottom: 2rem;
+}
+
+.paginationContainer {
+	display: flex;
+
+	justify-content: space-between;
+
+	align-items: center;
+}
+
+.containerDetailsPagination {
+	width: 30%;
+	display: flex;
+	//  flex-direction: row;
+	// justify-content: space-around;
+	align-items: center;
+	// background-color: aqua;
+}
+
+
+
+.buttomNumberPages {
+	width: 25px;
+	height: 25px;
+	border-radius: 6px;
+	border: none;
+	background-color: var(--BACKGOUND_BUTTOM_SUCCESS);
+	color: var(--COLORFONTES_WHITE);
+}
+
+.buttomBackNextPage {
+	width: 100%;
+	border: none;
+}
+
+
+
+
+.inputForm {
+	padding: 1rem;
+}
+
+.textlistavazia {
+	padding-top: 1rem;
+	text-align: center;
+}
+
+.labelDataTransaction{
+	padding: 1rem 1rem 0;
+}
+
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+	//flex-direction: column;
+
+	.containerAcessoSaldo {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 30px 30px 0px;
+		background-color: #f8fafc;
+	}
+
+	.containerForm{
+		flex-direction: column;
+	}
+	.containerBody {
+	}
+
+	.cardExtratoCenter {
+	}
+
+	.containerInputDate{
+		
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		
+	}
+
+	.cardataLeft{
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+
+	}
+
+	.agrupaDados{
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.containerButtonFormSearch{
+		
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		
+	}
+
+	.cardAcoes {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.containerForm {
+		flex-direction: column;
+	}
+
+	.paginationContainer {
+		flex-direction: column;
+	}
+	.containerMain {
+		flex-direction: column;
+	}
+
+	.containerLinkPagination{
+		///flex-direction: column;
+	}
+	.cardDataPicke{
+		display: none;
+	  }
+
+	  .dadosExtrato2{
+		display: block;
+	}
+	.dadosExtrato1{
+		display: none;
+	}
+}
+

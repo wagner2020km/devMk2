@@ -1,0 +1,86 @@
+.container {
+	/*
+    display: flex;
+    flex-direction: column;
+    */
+}
+
+.containerMain {
+	display: flex;
+	flex-direction: row;
+}
+
+.containerBody {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	padding: 30px 30px 0px;
+	background-color: #f8fafc;
+}
+
+.containerChavesPix {
+	display: flex;
+
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	padding: 2rem 0 0;
+
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-direction: column;
+	}
+}
+
+.listarChavesPix {
+	height: 100%;
+	width: 100%;
+	// background-color: aqua;
+	padding: 1rem;
+	background-color: var(--BACKGOUND_GRAY_100);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	margin-right: 1rem;
+	h4 {
+		padding-bottom: 2rem;
+	}
+}
+
+.addChavePix {
+	width: 70%;
+	height: 100%;
+	background-color: bisque;
+	background-color: var(--BACKGOUND_GRAY_100);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	padding: 1rem;
+}
+
+.tabelaChavesPix {
+	justify-content: left;
+	width: 100%;
+	background-color: var(--BACKGOUND_WHITE);
+}
+.cabecalhoTabelaChavePix {
+	// padding-top: 200px;
+	background-color: var(--BACKGOUND_GRAY_100);
+}
+
+.linhaTabelaChavePix {
+	background-color: var(--BACKGOUND_GRAY_100);
+
+	td {
+		padding: 0.5rem;
+		text-align: center;
+	}
+}
+
+.linhaChavePix {
+	width: 60%;
+}
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+	.addChavePix {
+		margin-top: 2rem;
+	}
+}

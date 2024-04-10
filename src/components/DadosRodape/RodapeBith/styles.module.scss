@@ -1,0 +1,64 @@
+.containerRodape {
+	width: 100%;
+	height: 250px;
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	
+
+	@media only screen and (max-width: 1002px) and (min-width: 100px) {
+		flex-wrap: wrap;
+	}
+}
+
+.logo {
+	width: 100%;
+	padding-left: 2rem;
+}
+
+.dadosContatos {
+	width: 100%;
+	padding-left: 2rem;
+
+	p {
+		font-size: 13px;
+		// font-weight: bold;
+		color: var(--COLORFONTES_GRAY_500);
+		padding-bottom: 4px;
+	}
+
+	h5 {
+		color: var(--COLORFONTES_GRAY_500);
+		padding-bottom: 8px;
+	}
+}
+
+.containerChate {
+	width: 100%;
+	padding-left: 2rem;
+}
+.canaisAtendimento{
+	color: var(--COLORFONTES_GRAY_500);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	padding: 1rem 1rem 1rem;
+
+}
+.chate {
+	display: flex;
+	flex-direction: column;
+	justify-content: right;
+	text-align: right;
+	padding: 1rem 1rem 1rem;
+
+	h5 {
+		color: var(--COLORFONTES_GRAY_500);
+	}
+}
+
+.imgNotificacao {
+	padding-bottom: 5rem;
+}

@@ -1,0 +1,91 @@
+* {
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	/* BACKGROUND COLORS */
+	--BACKGOUND_MYCARDS: #0f243b;
+	--BACKGOUND_ACTIONS: #364a63;
+	--BACKGOUND_BUTTOM_SUCCESS: #004275;
+	--BACKGOUND_BUTTOM_DAMGER: #004275;
+	--BACKGOUND_BUTTOM_WARNING: #004275;
+	--BACKGOUND_BLACK_900: #272727;
+	--BACKGOUND_WHITE: #fff;
+	--BACKGOUND_GRAY_100: #f2f2f2;
+	--BACKGOUND_GRAY_900: #a9a9a9;
+	--BACKGOUND_MYCARDS_DISABLED: #818385;
+	--BACKGOUND_SUCCESS: #32a639;
+	--BACKGROUND_ICON_INFO: #476b90;
+	--BACKGROUND_BUTTOM_INFO_2: #7aafc7;
+	--BACKGOUND_WARNING: #ff9900;
+	--BACKGOUND_DANGER: #ff0000;
+	--BACKGOUND_BUTTOM_INFO: #476b90;
+
+	/* TEXT COLORS */
+	--COLORFONTES_BLACK_FULL: #000;
+	--COLORFONTES_WHITE: #fff;
+	--COLORFONTES_BLACK_900: #0d0d0d;
+	--COLORFONTES_GRAY_900: #0a1926;
+	--COLORFONTES_GRAY_50: #eee4e4;
+	--COLORFONTES_GRAY_500: #a9a9a9;
+	--COLORFONTES_GRAY_FULL: #474646;
+	--COLORFONTES_GRAY_MEDIUM: #7a7878;
+	--COLORFONTES_GRAY_200: #d3d3d3;
+	--COLORFONTES_GRAY_100: #f2f2f2;
+	--COLORFONTES_RED_ERROR: #ff3333;
+	--COLORFONTES_RED_900: #73074d;
+	--COLORFONTES_RED_FULL: #ff0000;
+	--COLORFONTES_BLUE_900: #0511f2;
+	--COLORFONTES_BLUE_800: #1b75ce;
+	--COLORFONTES_BLUE_700: #2a86bf;
+	--COLORFONTES_BLUE_200: #6495ed;
+	--COLORFONTES_GREEN_900: #22732e;
+	--COLORFONTES_BLUEDARK: #132d4a;
+
+	// FONT FAMILE COLORS
+	--REGULAR: "Roboto_400Regular";
+	--MEDIUM: "Roboto_500Medium";
+	--BOLD: "Roboto_700Bold";
+
+	// FONTE SIZE TEXT
+	--XX_SMALL: 8px;
+	--X_SMALL: 10px;
+	--XG_SMALL: 12px;
+	--SMALL: 16px;
+	--MEDIUM: 18px;
+	--LARGE: 24px;
+	--X_LARGE: 32px;
+	--XX_LARGE: 48px;
+}
+
+button {
+	cursor: pointer;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+body,
+input,
+textarea,
+select,
+button {
+	font: 400 1rem sans-serif;
+}
+
+@media (max-width: 720px) {
+	html {
+		font-size: 87.5%;
+	}
+}
+
+@media (max-width: 1080px) {
+	html {
+		font-size: 93.75%;
+	}
+}
