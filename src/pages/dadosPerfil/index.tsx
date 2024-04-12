@@ -44,6 +44,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 
+import Divider from '@mui/material/Divider';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ContentCut from '@mui/icons-material/ContentCut';
+import Edit from '@mui/icons-material/Edit';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import ContentPaste from '@mui/icons-material/ContentPaste';
+import Cloud from '@mui/icons-material/Cloud';
+
 
 
 import {
@@ -288,19 +299,35 @@ const dadosPerfil = (props: any) => {
 				<div className={styles.containerGeral}>
 					<div className={styles.cardForm}>
 						<div className={styles.contentDataForm}>
-							<Button variant="outlined" onClick={() => { handleClickOpen(1) }}>
-								Editar dados
-							</Button>
-							<Button variant="outlined" onClick={() => { handleClickOpen(2) }}>
-								Alterar Status
-							</Button>
+
 							<div className={styles.formSearch}>
+
+								<Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3 }}>
+									<StyledPaper sx={{ my: 1, mx: 'auto', p: 2 }}>
+										<MenuList>
+											<MenuItem onClick={() => { handleClickOpen(1) }}>
+												<ListItemIcon>
+													<Edit fontSize="small" />
+												</ListItemIcon>
+												<ListItemText>Editar dados</ListItemText>
+
+											</MenuItem >
+											<MenuItem onClick={() => { handleClickOpen(2) }}>
+												<ListItemIcon>
+													<ContentCopy fontSize="small" />
+												</ListItemIcon>
+												<ListItemText>Alterar status</ListItemText>
+
+											</MenuItem>
+										</MenuList>
+									</StyledPaper>
+								</Box>
 								<Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3 }}>
 									<StyledPaper sx={{ my: 1, mx: 'auto', p: 2 }}>
 										{/* Grid container para o primeiro bloco */}
 										<Grid container alignItems="center" spacing={2}>
 											<Grid item>
-											<MdStreetview  size={24} color="#0fa89f" />
+												<MdStreetview size={24} color="#0fa89f" />
 											</Grid>
 											<Grid item xs>
 												<Typography noWrap>Cliente</Typography>
@@ -309,7 +336,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={2}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>Nome:</Typography>
+													<Typography variant="h6" gutterBottom>Nome:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>Wagner silva</Typography>
@@ -319,7 +346,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>Documento:</Typography>
+													<Typography variant="h6" gutterBottom>Documento:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>407.804.276-05</Typography>
@@ -329,7 +356,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>N Conta:</Typography>
+													<Typography variant="h6" gutterBottom>N Conta:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>1233256</Typography>
@@ -352,7 +379,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>Rua:</Typography>
+													<Typography variant="h6" gutterBottom>Rua:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>José Rufino, N 222, casa</Typography>
@@ -362,7 +389,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>Bairro:</Typography>
+													<Typography variant="h6" gutterBottom>Bairro:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>Jardim felicidade</Typography>
@@ -372,7 +399,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>Cidade:</Typography>
+													<Typography variant="h6" gutterBottom>Cidade:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>BH/MG</Typography>
@@ -395,7 +422,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>Telefone fixo:</Typography>
+													<Typography variant="h6" gutterBottom>Telefone fixo:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>Cliente</Typography>
@@ -405,7 +432,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>Telefone Celular:</Typography>
+													<Typography variant="h6" gutterBottom>Telefone Celular:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>(31) 986400075</Typography>
@@ -415,7 +442,7 @@ const dadosPerfil = (props: any) => {
 										<Box sx={{ paddingTop: 2 }}>
 											<Grid container alignItems="center" spacing={1}>
 												<Grid item>
-												<Typography variant="h6" gutterBottom>E-mail:</Typography>
+													<Typography variant="h6" gutterBottom>E-mail:</Typography>
 												</Grid>
 												<Grid item xs>
 													<Typography noWrap>wagnervaguim@gmail.com</Typography>
@@ -442,7 +469,144 @@ const dadosPerfil = (props: any) => {
 								<div className={styles.contentDataForm}>
 									<div className={styles.formSearch}>
 										<div className={styles.containerInut}>
-											<h3>Bairro</h3>
+											<h4>E-mail</h4>
+											<Controller
+												control={control}
+												name="rua"
+												render={({ field: { onChange, onBlur, value } }) => (
+													<InputFormBitClean
+														placeholder="E-mail"
+														type="email"
+														//readOnly={!!dataOrder?.customer?.email}
+														onChange={(event) => {
+															const inputValue = event.target.value;
+															let isValid = true;
+
+															if (inputValue == '') {
+																isValid = false;
+
+																const auxInvalidFields = [
+																	...invalidFields,
+																	'rua',
+																];
+																setFieldRedux('invalidFields', auxInvalidFields);
+
+															} else {
+
+																isValid = true;
+																const auxInvalidFields = invalidFields.filter(
+																	(field: string) => field !== 'rua'
+																);
+																setFieldRedux('invalidFields', auxInvalidFields);
+															}
+
+															handleValueChange({
+																name: 'rua',
+																valor: inputValue,
+																isValid: isValid,
+																page: 1,
+															});
+														}}
+
+														value={rua.valor}
+													/>
+												)}
+											/>
+										</div>
+										<div className={styles.containerInut}>
+											<h4>Telefone fixo</h4>
+											<Controller
+												control={control}
+												name="rua"
+												render={({ field: { onChange, onBlur, value } }) => (
+													<InputFormBitClean
+														placeholder="Telefone fixo"
+														type="text"
+														//readOnly={!!dataOrder?.customer?.email}
+														onChange={(event) => {
+															const inputValue = event.target.value;
+															let isValid = true;
+
+															if (inputValue == '') {
+																isValid = false;
+
+																const auxInvalidFields = [
+																	...invalidFields,
+																	'rua',
+																];
+																setFieldRedux('invalidFields', auxInvalidFields);
+
+															} else {
+
+																isValid = true;
+																const auxInvalidFields = invalidFields.filter(
+																	(field: string) => field !== 'rua'
+																);
+																setFieldRedux('invalidFields', auxInvalidFields);
+															}
+
+															handleValueChange({
+																name: 'rua',
+																valor: inputValue,
+																isValid: isValid,
+																page: 1,
+															});
+														}}
+
+														value={rua.valor}
+													/>
+												)}
+											/>
+										</div>
+										<div className={styles.containerInut}>
+											<h4>Telefone Celular</h4>
+											<Controller
+												control={control}
+												name="rua"
+												render={({ field: { onChange, onBlur, value } }) => (
+													<InputFormBitClean
+														placeholder="Telefone celular"
+														type="text"
+														//readOnly={!!dataOrder?.customer?.email}
+														onChange={(event) => {
+															const inputValue = event.target.value;
+															let isValid = true;
+
+															if (inputValue == '') {
+																isValid = false;
+
+																const auxInvalidFields = [
+																	...invalidFields,
+																	'rua',
+																];
+																setFieldRedux('invalidFields', auxInvalidFields);
+
+															} else {
+
+																isValid = true;
+																const auxInvalidFields = invalidFields.filter(
+																	(field: string) => field !== 'rua'
+																);
+																setFieldRedux('invalidFields', auxInvalidFields);
+															}
+
+															handleValueChange({
+																name: 'rua',
+																valor: inputValue,
+																isValid: isValid,
+																page: 1,
+															});
+														}}
+
+														value={rua.valor}
+													/>
+												)}
+											/>
+										</div>
+									</div>
+									<div className={styles.formSearch}>
+										<div className={styles.containerInut}>
+											<h4>Bairro</h4>
 											<Controller
 												control={control}
 												name="bairro"
@@ -487,7 +651,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h3>Rua</h3>
+											<h4>Rua</h4>
 											<Controller
 												control={control}
 												name="rua"
@@ -532,7 +696,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h3>Número</h3>
+											<h4>Número</h4>
 											<Controller
 												control={control}
 												name="numero"
@@ -577,7 +741,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h3>Complemento</h3>
+											<h4>Complemento</h4>
 											<Controller
 												control={control}
 												name="complemento"
@@ -624,7 +788,7 @@ const dadosPerfil = (props: any) => {
 									</div>
 									<div className={styles.formSearch}>
 										<div className={styles.containerInut}>
-											<h3>Cidade</h3>
+											<h4>Cidade</h4>
 											<Controller
 												control={control}
 												name="cidade"
@@ -669,7 +833,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h3>Estado</h3>
+											<h4>Estado</h4>
 											<Controller
 												control={control}
 												name="estado"
@@ -714,7 +878,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h3>Prfil</h3>
+											<h4>Perfil</h4>
 											<Controller
 												control={control}
 												name="selectPerfil"
@@ -733,18 +897,18 @@ const dadosPerfil = (props: any) => {
 																isValid = true;
 																const auxInvalidFields = [
 																	...invalidFields,
-																	'selectStatus',
+																	'selectPerfil',
 																];
 																setFieldRedux('invalidFields', auxInvalidFields);
 															} else {
 																isValid = false;
 																const auxInvalidFields = invalidFields.filter(
-																	(field: string) => field !== 'selectStatus'
+																	(field: string) => field !== 'selectPerfil'
 																);
 																setFieldRedux('invalidFields', auxInvalidFields);
 															}
 															handleValueChange({
-																name: 'selectStatus',
+																name: 'selectPerfil',
 																valor: inputValue,
 																isValid: isValid,
 																page: 1,
@@ -796,7 +960,7 @@ const dadosPerfil = (props: any) => {
 								<div className={styles.contentDataForm}>
 									<div className={styles.formSearch}>
 										<div className={styles.containerInut}>
-											<h3>Status</h3>
+											<h4>Status</h4>
 											<Controller
 												control={control}
 												name="selectStatus"
@@ -838,7 +1002,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h3>Motivo</h3>
+											<h4>Motivo</h4>
 											<Controller
 												control={control}
 												name="selectStatus"
@@ -882,17 +1046,17 @@ const dadosPerfil = (props: any) => {
 									</div>
 									<div className={styles.formSearch}>
 										<div className={styles.containerInuttextArea}>
-											<h3>Descrição</h3>
+											<h4>Descrição</h4>
 											<Controller
 												control={control}
 												name="selectStatus"
-												
+
 												render={({ field: { onChange, onBlur, value } }) => (
 													<TextArea
-													rows={30}
-													cols={10}
+														rows={30}
+														cols={10}
 														placeholder="Estado"
-														
+
 														//readOnly={!!dataOrder?.customer?.email}
 														onChange={(event) => {
 															const inputValue = event.target.value;
