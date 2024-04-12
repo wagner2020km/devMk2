@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,9 +17,14 @@ import getImg from 'assets';
 
 export function Menu({ showMenu }: { showMenu: boolean }): React.JSX.Element {
 	const { signOut, user } = useContext(AuthContext);
+	const [showSubMenu, setShowSubMenu] = useState(false);
 	const router = useRouter();
 	const isMobile = useMediaQuery('(max-width: 600px)');
 	const currentUrl = router.asPath;
+
+	const toggleSubMenu = () => {
+		setShowSubMenu(!showSubMenu);
+	};
 
 	function handleSingOut() {
 		signOut();
@@ -30,11 +35,10 @@ export function Menu({ showMenu }: { showMenu: boolean }): React.JSX.Element {
 			<div
 				className={
 					isMobile
-						? `${
-								showMenu
-									? styles.containerMenuMobile
-									: styles.containerMenuMobileOut
-						  }`
+						? `${showMenu
+							? styles.containerMenuMobile
+							: styles.containerMenuMobileOut
+						}`
 						: styles.containerMenu
 				}
 			>
@@ -65,24 +69,24 @@ export function Menu({ showMenu }: { showMenu: boolean }): React.JSX.Element {
 					)}
 				</Link>
 
-				 <Link className={styles.linkMenu} href="/logistas">
-				<Image
-					className={styles.iconesBith}
-					src={
-						currentUrl === '/logistas'
-							? IconsBith.ICONBITH.cartoes_menu_azul
-							: IconsBith.ICONBITH.cartoes_menu
-					}
-					alt="Logo - SVG"
-					width="20"
-					height="20"
-				/>
-				{currentUrl === '/logistas' ? (
-					<span className={styles.labelTextMenuAtivo}>Logistas</span>
-				) : (
-					<span className={styles.labelTextMenuInativo}>Logistas</span>
-				)}
-			</Link> 
+				<Link className={styles.linkMenu} href="/logistas">
+					<Image
+						className={styles.iconesBith}
+						src={
+							currentUrl === '/logistas'
+								? IconsBith.ICONBITH.cartoes_menu_azul
+								: IconsBith.ICONBITH.cartoes_menu
+						}
+						alt="Logo - SVG"
+						width="20"
+						height="20"
+					/>
+					{currentUrl === '/logistas' ? (
+						<span className={styles.labelTextMenuAtivo}>Logistas</span>
+					) : (
+						<span className={styles.labelTextMenuInativo}>Logistas</span>
+					)}
+				</Link>
 
 				<Link className={styles.linkMenu} href="/saldo">
 					{currentUrl === '/saldo' ? (
@@ -134,6 +138,50 @@ export function Menu({ showMenu }: { showMenu: boolean }): React.JSX.Element {
 						<span className={styles.labelTextMenuInativo}>Perfil</span>
 					)}
 				</Link>
+				<div className={styles.subMenuWrapper}>
+					<div className={styles.menuItem} onClick={toggleSubMenu}>
+						<Image
+							className={styles.iconesBith}
+							src={
+								currentUrl === '/logistas'
+									? IconsBith.ICONBITH.cartoes_menu_azul
+									: IconsBith.ICONBITH.cartoes_menu
+							}
+							alt="Logo - SVG"
+							width="20"
+							height="20"
+						/>
+						{currentUrl === '/logistas' ? (
+							<span className={styles.labelTextMenuAtivo}>Config</span>
+						) : (
+							<span className={styles.labelTextMenuInativo}>Config</span>
+						)}
+					</div>
+
+					{/* Renderiza o submenu se showSubMenu for true */}
+					{showSubMenu && (
+						<div className={styles.subMenu}>
+							<Link className={styles.linkSubMenu} href="/acoes">
+								{currentUrl === '/acoes' ? (
+									<span className={styles.labelTextMenuAtivo}>Ações</span>
+								) : (
+									<span className={styles.labelTextMenuInativo}>Ações</span>
+								)}
+
+							</Link>
+							<Link className={styles.linkSubMenu} href="/usuarios">
+								{currentUrl === '/usuarios' ? (
+									<span className={styles.labelTextMenuAtivo}>Usuários</span>
+								) : (
+									<span className={styles.labelTextMenuInativo}>Usuários</span>
+								)}
+
+							</Link>
+							
+							{/* Adicione mais links do submenu conforme necessário */}
+						</div>
+					)}
+				</div>
 
 				{/* <Link className={styles.linkMenu} href="/home">
 				<Image

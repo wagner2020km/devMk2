@@ -6,7 +6,10 @@ import { InputHTMLAttributes, SelectHTMLAttributes } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-interface TextAreaProps extends InputHTMLAttributes<HTMLTextAreaElement> {}
+interface TextAreaProps extends InputHTMLAttributes<HTMLTextAreaElement> {
+	rows?: number; // Número de linhas visíveis
+	cols?: number; // Número de colunas visíveis
+}
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {}
 
@@ -19,9 +22,17 @@ export function InputFormBitClean({ ...rest }: InputProps) {
 }
 
 export function TextArea({ ...rest }: TextAreaProps) {
-	return <TextArea className={styles.inputComponente} {...rest}></TextArea>;
+	return <textarea style={{ width: '100%', height: '100px' }} className={styles.inputComponenteClean} {...rest} />;
 }
-
+/*
+export function TextArea: React.FC<TextAreaProps> = ({ ...rest }) => {
+	return <textarea className={styles.inputComponente} {...rest} />;
+  }
+/*
+const TextArea: React.FC<TextAreaProps> = ({ ...rest }) => {
+	return <textarea className={styles.inputComponente} {...rest} />;
+  };
+  */
 export function SelectInputBit({ ...rest }: SelectProps) {
 	return <select className={styles.inputComponenteSelect} {...rest} />;
 }

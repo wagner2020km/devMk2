@@ -9,6 +9,22 @@
 	min-height: 100vh;
 }
 
+.subMenu{
+	
+	padding-left: 32px;
+	padding-top: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+
+
+}
+
+.linkSubMenu{
+	padding-bottom: 16px;
+}
+
 @keyframes fadeInAnimation {
 	0% {
 		opacity: 0;
@@ -71,6 +87,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+
+}
+
+.subMenuWrapper{
+	margin: 20px 20px 10px;
+	color: var(--COLORFONTES_GRAY_200);
+	
 
 	&:hover {
 		color: var(--COLORFONTES_BLUE_800);

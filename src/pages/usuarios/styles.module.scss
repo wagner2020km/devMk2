@@ -1,0 +1,210 @@
+
+
+.containerGeral {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	padding-top: 30px;
+}
+
+.cardForm {
+	width: 100%;
+
+}
+
+.containerInut{
+   
+	width: 30%;
+    padding: 0.5rem;
+	
+}
+
+.formSearch{
+	display: flex;
+	width: 100%;
+    padding: 0.5rem;
+	flex-direction: row;
+
+}
+
+.label{
+	font-size: 14px;
+	font-weight: bold;
+	margin-right: 5px;
+}
+
+.itemContainer {
+	
+	
+	display: block;
+	margin-bottom: 10px;
+	min-width: 0;
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+
+  }
+
+.linhaTabela{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+    
+}
+.contentDataForm{
+	background-color: var(--BACKGOUND_WHITE);
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 3px var(--COLORFONTES_GRAY_500);
+	border-color: var(--BACKGOUND_GRAY_100);
+	margin-bottom: 2rem;
+}
+.cardButtomSearch{
+	display: flex;
+    justify-content: flex-end; 
+	flex-direction: row;
+    margin-top: 5px; 
+	padding: 16px;
+}
+
+.contentButtom{
+	margin: 5px;
+}
+
+.containerLinkPagination {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 50%;
+}
+
+.titleContainer {
+	display: flex;
+	flex-direction: row;
+	margin-top: 16px;
+	padding-bottom: 1rem;
+	flex-wrap: wrap;
+	h3 {
+		padding-left: 0.5rem;
+	}
+}
+
+
+.paginationContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+padding: 10px;
+	align-items: center;
+}
+
+.containerDetailsPagination {
+	width: 30%;
+	display: flex;
+	align-items: center;
+}
+
+.exporExcel{
+	margin-bottom: 15px;
+}
+
+
+  .linhaTabela {
+    hover {
+      backgroundColor: '#f5f5f5',
+    }
+  }
+
+@media only screen and (max-width: 1002px) and (min-width: 100px) {
+	//flex-direction: column;
+
+	.containerAcessoSaldo {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 30px 30px 0px;
+		background-color: #f8fafc;
+	}
+
+	.containerForm{
+		flex-direction: column;
+	}
+	.containerBody {
+	}
+
+	.cardExtratoCenter {
+	}
+
+	.containerInputDate{
+		
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		
+	}
+
+	.cardataLeft{
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+
+	}
+
+	.agrupaDados{
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.containerButtonFormSearch{
+		
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		
+	}
+
+	.cardAcoes {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.containerForm {
+		flex-direction: column;
+	}
+
+	.paginationContainer {
+		flex-direction: column;
+	}
+	.containerMain {
+		flex-direction: column;
+	}
+
+	.containerLinkPagination{
+		///flex-direction: column;
+	}
+	.cardDataPicke{
+		display: none;
+	  }
+
+	
+	  .containerInut{
+   
+		width: 100%;
+
+	}
+	
+	.formSearch{
+		
+		flex-direction: column;
+		
+	}
+		
+}
+
