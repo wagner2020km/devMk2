@@ -2,6 +2,7 @@
 .containerTransferencia {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-around;
 	padding-top: 30px;
 }
 
@@ -16,27 +17,18 @@
 }
 
 .cardLeft {
+	width: 48%;
+
+}
+
+.containerInut{
+   
 	width: 100%;
-
+    padding: 0.5rem;
+	
 }
 
-.cardRigth {
-	width: 100%;
-	padding-left: 15px;
-
-}
-
-.ContainerRigth {
-	//margin-top: 30px;
-
-	p {
-		padding-top: 30px;
-		text-align: justify;
-	}
-}
-
-
-.cardTransferencia {
+.containerLimite {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -50,14 +42,21 @@
 	margin-bottom: 2rem;
 
 	@media only screen and (max-width: 1002px) and (min-width: 100px) {
-		flex-wrap: wrap;
+		//flex-wrap: wrap;
 	}
 
 	p {
-		padding: 0 1rem 0.5rem;
+	//	padding: 0 1rem 0.5rem;
 	}
 }
 
+.cardButtomLimit{
+	display: flex;
+	flex-direction: center;
+	justify-content: center;
+	align-items: center;
+
+}
 
 
 .buttomMenu {
@@ -136,6 +135,11 @@
  }
  .divAcoes{
 	flex-wrap: wrap;
+ }
+
+ .cardLeft {
+	 width: 100%;
+ 
  }
 }
 

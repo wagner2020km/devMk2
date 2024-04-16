@@ -28,6 +28,23 @@
 
   
 }
+
+.iputGroupValor{
+  //  width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+   padding-bottom: 1rem;
+   padding-top: 1rem;
+  // background-color: aquamarine;
+
+  @media only screen and (max-width: 1002px) and (min-width: 100px)  {
+    flex-wrap: wrap;
+  }
+
+  
+}
 .containerInputCodigo{
   display: flex;
   align-items: center;
@@ -80,6 +97,20 @@ flex-direction: row;
    }
 }
 
+.containerInutButtom{
+  width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+   // align-items: center;
+   padding-right: 1rem;
+   padding-top: 1.5rem;
+   
+
+   label{
+    padding-bottom: 0.5rem;
+   }
+}
 .containerInutBuscarConta{
   width: 50%;
     display: flex;
@@ -149,14 +180,15 @@ flex-direction: row;
 }
 
 .iputGroupCheckAddFavorites{
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
  // align-items: center;
  padding-bottom: 1rem;
   padding-right: 1rem;
+  padding-top: 2rem;
  label{
   padding-left: 0.5rem;
  }
@@ -172,7 +204,7 @@ flex-direction: row;
 .ButtomSubmitTransfer{
   display: flex;
   flex-direction: center;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -272,6 +304,7 @@ margin-top: -27px !important;
  }
 
  .containerBuscarConta{
+  width: 70%;
   display: flex;
   flex-direction: row;
   justify-content: center;

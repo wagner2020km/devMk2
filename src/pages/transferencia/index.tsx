@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { TabList, Tab, Tabs } from 'react-tabs';
-
+import { useRouter } from 'next/router';
 import Container from '../../layout/Container';
 import Alert from '@mui/material/Alert';
-
+import { decryptID } from '../../utils/encryptId';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import { Minicards } from '../../components/MiniCads/MiniCards';
-import { FormTransferencias } from '../../components/FormTransferencias/FormTransferencias';
+import  FormTransferencias  from '../../components/FormTransferencias/FormTransferencias';
 import Loading from '../../components/Loading';
 //import  FormTransferenciasInterna  from '../../components/FormTransferenciasInterna/FormTransferenciasInterna';
 import { moneyMask } from '../../utils/cpfMask';
@@ -24,7 +24,9 @@ import styles from './styles.module.scss';
 
 export default function Transferencia() {
 	const saldo = useSelector((state: any) => state.saldoReducer.saldo);
-
+	const router = useRouter();
+	//const { acountCode } = router.query;
+	
 	const [habilitaSaldo, setHabilitaSaldo] = useState(false);
 	const [getValorTransacao, setGetValorTRansacao] = useState('');
 	const [buttomMenuOptionTransfer, setButtomMenuOptionTransfer] = useState(1);
@@ -62,9 +64,12 @@ export default function Transferencia() {
 		}
 	}
 
+
 	useEffect(() => {
 		getSaldoHeader();
 	}, []);
+	
+
 
 	return (
 		<Container>
@@ -75,74 +80,7 @@ export default function Transferencia() {
 						<h3>Transferência</h3>
 					</div>
 					<div className={styles.cardTransferencia}>
-						<div className={styles.dadosSaldo}>
-							<figure>
-								<Brasil size={16} />
-							</figure>
-
-							<h5>Saldo em conta corrente</h5>
-						</div>
-						<div className={styles.valorSaldo}>
-							<div className={styles.saldoLeft}>
-								<p>
-									{' '}
-									<span className={styles.textoGeral}>R$: </span>
-									<span className={styles.textoValorSaldo}>
-										{habilitaSaldo === true
-											? numeroParaReal(recebeStadoSaldo)
-											: '*********'}
-									</span>
-									<span className={styles.textoGeral}>
-										{habilitaSaldo === true ? '' : ''}
-									</span>
-								</p>
-							</div>
-							<div className={styles.iconeSaldo}>
-								<button className={styles.buttomIcon} onClick={chengeSaldo}>
-									{habilitaSaldo === true ? (
-										<AiFillEye size={28} />
-									) : (
-										<AiFillEyeInvisible size={28} />
-									)}
-								</button>
-							</div>
-						</div>
-
-						<div className={styles.valorDatranferencia}>
-							<h4>Quanto você quer transferir</h4>
-							<div className={styles.inpuValorTrans}>
-								<label>R$:</label>
-								<input
-									className={styles.inputTransferencia}
-									value={getValorTransacao}
-									onChange={(e) =>
-										setGetValorTRansacao(moneyMask(e.target.value))
-									}
-									placeholder={'0,00'}
-								></input>
-							</div>
-						</div>
-						{/*
-                  <nav className={styles.navMenu}>
-                    <ul>
-											<li>
-												<button
-													className={styles.buttomMenuActivit}
-													onClick={() =>  handleChangeTranfer(1)}
-												>
-													Nova conta
-												</button>
-											</li>
-											<li>
-												<button
-													className={styles.buttomMenu}
-													onClick={() =>  handleChangeTranfer(2)}>
-													Favoritos
-												</button>
-											</li>
-                    </ul>
-                  </nav>
-								*/}
+						
 						<Tabs>
 							<TabList>
 								<Tab>
@@ -168,7 +106,7 @@ export default function Transferencia() {
 								<div className={styles.containerform}>
 									{/* <FormTransferenciasInterna valorTr={getValorTransacao} /><FormTransferencias valorTr={getValorTransacao} />*/}
 
-									<FormTransferencias valorTr={getValorTransacao} />
+									<FormTransferencias valorTr={getValorTransacao}/>
 								</div>
 							)}
 							{buttomMenuOptionTransfer === 2 && (
@@ -181,7 +119,7 @@ export default function Transferencia() {
 				</div>
 				<div className={styles.cardRigth}>
 					<div className={styles.ContainerRigth}>
-						<article className={styles.information}>
+						<article>
 							<div className={styles.titleContainer}>
 								<h3>Como funciona?</h3>
 							</div>

@@ -2,24 +2,31 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
-
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import Modal from 'react-modal';
-
+import {
+	resetUserRegisterData,
+	setUserRegisterField,
+} from '../../redux/actions/userRegisterActions';
+import getPropSegura from '../../utils/getPropSegura';
+import { AlertColor } from '@mui/material/Alert';
+import { connect } from 'react-redux';
 import Image from 'next/image';
-
+import { decryptID } from '../../utils/encryptId';
+import { virifyCpgCnpj } from '../../validacoes/maskCpfCnpj';
+import { InputFormBitClean, TextArea } from '../../components/ui/InputFormBit';
 import { AiFillCheckCircle } from 'react-icons/ai';
-
-import * as yup from 'yup';
-
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Button, Stack, Hidden } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import AlertSnack from '../../components/AlertSnack/AlertSnack'
+import { moneyMask } from '../../utils/cpfMask';
 import { toast } from 'react-toastify';
 import { Spinner } from '../../components/Spinner/Spinner';
 import GetDateNoW from '../../utils/functions/GetDateNow';
-import { InputFormBit, SelectInputBit } from '../ui/InputFormBit';
-import { MaskInput } from '../ui/InputFormBit';
-import { Buttom } from '../ui/Buttom';
+import { useDispatch } from 'react-redux';
+//import { Buttom } from '../ui/Buttom';
 import { ButtomWarning } from '../../components/ui/Buttom';
 import { AxiosError } from 'axios';
 import { formaTavalorCelcoin } from '../../utils/cpfMask';
@@ -33,24 +40,21 @@ import getImg from '../../assets';
 import transferenciaInterna from '../../api/transferenciaEntreContas'
 import { BlockTela } from '../../components/BlockTela/BlockTela';
 import { printComprovante } from '../../utils/printComprovante'
-import {geraPdfComprovante} from '../../utils/comprovantePdf'
+import { geraPdfComprovante } from '../../utils/comprovantePdf'
 import styles from './styles.module.scss';
 
-interface TransferenciasPropos {
-	tipo?: string;
-	valorTr: string;
-}
 
 type dadosInputGFormProps = {
 	addFavodecido: boolean;
 	agendamento: string;
-	conta: string;
 	descricao: string;
 	docFavorecido: string;
 	agencia: string;
 	nomeFavorecido: string;
 	tipoConta: string;
 	contaTemporaria?: string;
+	valorTransferencia: string;
+	numeroConta: string;
 };
 
 type TypeDadossucesso = {
@@ -58,16 +62,15 @@ type TypeDadossucesso = {
 	clientCode: string;
 };
 
-export function FormTransferencias({
-	tipo,
-	valorTr,
-	...rest
-}: TransferenciasPropos) {
+const FormTransferencias = (props: any) => {
+
 	const user = useSelector((state: any) => state.userReducer.user);
-
+	const dispatch = useDispatch();
 	const divRef = useRef(null);
+	const router = useRouter();
+	const { acountCode } = router.query;
+	console.log('Id do plano', acountCode);
 
-	const [typeOptionSchedule, setTypeOptionSchedule] = useState('');
 	const [getNumbarAcount, setGetNumberAcount] = useState('');
 	const [validaValorTransferencia, setValidaValorTransferencia] = useState('');
 	const [validaDadosConta, setValidaDadosConta] = useState(false);
@@ -84,22 +87,31 @@ export function FormTransferencias({
 	const [startPause, setStartPause] = useState(false);
 	const [codigoValidacao, setCodigoValidacao] = useState('');
 	const [borderInputCodigo, setBorderInputCodigo] = useState(false);
+
+	const [openAlert, setOpenAlert] = useState(false);
+	const [nPagina, setNpagina] = useState(1);
+	const [menssageAlert, setMenssageAlert] = useState('');
+	const [typeAlert, setTypeAlert] = useState<AlertColor>('success');
+
 	let erroRetonoCod = '';
 	let erroRetonoMensage = '';
 	const dateNow = new Date().toDateString();
-	const schema = yup.object().shape({
-		valorTransferencia: yup.string(),
-		agencia: yup.string().required('* Agência é obrigatório'),
-		contaTemporaria: yup.string(),
-		conta: yup.string().required('* Conta é obrigatório'),
-		nomeFavorecido: yup.string().max(50).required('* Nome é obrigatório'),
-		docFavorecido: yup.string().required('* CPF/CNPJ é obrigatório'),
-		addFavodecido: yup.boolean(),
 
-		finalidade: yup.string(),
-		descricao: yup.string(),
 
-	});
+	const {
+		allFields,
+		contaTemporaria,
+		numeroConta,
+		valorTransferencia,
+		agencia,
+		nomeFavorecido,
+		docFavorecido,
+		addFavodecido,
+		descricao,
+		setFieldRedux,
+		invalidFields,
+		resetUserRegisterDataRedux,
+	} = props;
 
 	const {
 		control,
@@ -110,26 +122,101 @@ export function FormTransferencias({
 		formState: { errors },
 	} = useForm<dadosInputGFormProps>({
 		mode: 'onChange',
-		resolver: yupResolver(schema),
+
 	});
 
-	const optionsBancos = [
-		{ value: 1, label: 'Entre Contas' },
-		//{ value: 2, label: 'Banco Inter' },
-		//{ value: 3, label: 'Nunbank' },
-		//{ value: 4, label: 'Caixa Económica federal' },
-	];
 
-	const optionsTipoConta = [
-		{ value: 1, label: 'Conta poupança' },
-		{ value: 2, label: 'Conta corrente' },
-	];
 
-	const optionsTipoTransacao = [
-		{ value: 1, label: 'Ted' },
-		{ value: 2, label: 'Doc' },
-		{ value: 2, label: 'Pix' },
-	];
+	const handleValueChange = ({ name, valor, isValid, page }: {
+		name: string;
+		valor: string; // Add this line to explicitly declare the type
+		isValid: boolean;
+		page: number;
+	}) => {
+		setFieldRedux(name, {
+			name,
+			valor,
+			isValid,
+			page,
+		});
+	};
+
+	const verifyFieldsByPage = (page: number) => {
+
+		const invalidFieldsByPage = invalidFields.filter(
+			(field: string) => allFields[field]?.page === page
+		);
+		let isValid = true;
+
+		if (page === 1) {
+
+			if (!contaTemporaria.isValid) {
+				isValid = false;
+				handleClick('Conta é obrigatório', 'error');
+			}
+
+
+		}
+
+		if (page === 2) {
+
+			if (!valorTransferencia.isValid) {
+				isValid = false;
+				handleClick('Valor é obrigatório', 'error');
+			}
+			if (!nomeFavorecido.isValid) {
+
+				isValid = false;
+				handleClick('Nome completo é obrigatório', 'error');
+			}
+			if (!agencia.isValid) {
+				isValid = false;
+				handleClick('Agência é obrigatório', 'error');
+			}
+			if (!contaTemporaria.isValid) {
+				isValid = false;
+				handleClick('Conta é obrigatório', 'error');
+			}
+			if (!docFavorecido.isValid) {
+				isValid = false;
+				handleClick('Documento é obrigatório', 'error');
+			}
+
+		}
+
+		if (!isValid) {
+
+			return false;
+		}
+
+		return isValid;
+	};
+
+	const handleNextPage = async () => {
+
+		const isValidsFields = verifyFieldsByPage(nPagina);
+
+
+		if (nPagina === 1) {
+			if (isValidsFields) {
+
+				handleSearchAcount(contaTemporaria.valor)
+			}
+		}
+		if (nPagina === 2) {
+			if (isValidsFields) {
+				console.log('passando em verifyFieldsByPage verdadeiro', isValidsFields);
+				finalizaTrasferencia()
+			}
+		}
+	};
+
+	const handleClick = (menssage: string, type: AlertColor) => {
+		setMenssageAlert(menssage);
+		setTypeAlert(type)
+		setOpenAlert(true);
+	};
+
 
 
 	async function handleValidationAcount(dataAcount: any) {
@@ -142,8 +229,8 @@ export function FormTransferencias({
 			console.log('dados da conta', response);
 			if (response.status == 200) {
 				setValue('nomeFavorecido', response.data.nome);
-				setValue('docFavorecido', response.data.documento);
-				setValue('conta', response.data.conta);
+				//setValue('docFavorecido', response.data.documento);
+				//setValue('conta', response.data.conta);
 				setValue('agencia', '0001');
 				setValidaDadosConta(true);
 				setIsOpen(false);
@@ -162,439 +249,43 @@ export function FormTransferencias({
 			// setConfereDados(false)
 			console.log(error);
 			setValue('nomeFavorecido', '');
-			setValue('docFavorecido', '');
+			//setValue('docFavorecido', false);
 			//  setLoadButtomSubmit(false)
 
 		}
 
 	}
-	const handleTransfer: SubmitHandler<dadosInputGFormProps> = async (
-		dataForm
-	) => {
-		if (validaValorTransferencia) {
-			setGuardaDadosForm(dataForm);
-			setAbreBodalTranfereciaCheckOut(true);
-			//sendToken(user.tipo_auth_transacao);
-			sendToken(typePayment);
-		} else {
-			toast.error(`Digite um valor valido`, {
-				position: 'top-center',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'colored',
+	const handleSearchAcount = async (numberAcount: any) => {
+
+		console.log('Recebe numero conta para pewsuisa', numberAcount)
+		if (numberAcount == 5585) {
+			handleValueChange({
+				name: 'numeroConta',
+				valor: numberAcount,
+				isValid: true,
+				page: 2,
 			});
+			setNpagina(2)
+			setValidaDadosConta(true);
 		}
 
-		console.log('dados foprm', validaValorTransferencia);
-	};
-
+	}
 	const finalizaTrasferencia = async () => {
-		setIsOpen(true);
-		if (codigoValidacao.length == 6) {
 
-			try {
-				const response = await transferenciaInterna(typePayment, guardaDadosForm.conta, formaTavalorCelcoin(validaValorTransferencia), user.numeroConta, codigoValidacao, user.telefone);
-				if (response.data.status === 201 && response?.data?.data) {
-					setIsOpen(false);
-					setDadosRetornoTransacao(response.data.data.body);
-					setCheckRetornoTransacao(true);
-					reset();
-
-				}else{
-					setIsOpen(false);
-					toast.error(`Transação não efetuada`, {
-						position: 'top-center',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: 'colored',
-					});
-				}
-				console.log('terceiro');
-			} catch (error) {
-				console.log(error);
-			}
-			/*
-			try {
-				const responseDebito = await AddSaldo(dataDebito, user.numeroConta);
-				if (responseDebito.data.status === 200 && responseDebito?.data?.data) {
-					//	setIsOpen(false)
-					console.log('primeiro');
-					try {
-						const responseCredito = await AddSaldo(
-							dataCredito,
-							guardaDadosForm.conta
-						);
-						if (
-							responseCredito.data.status === 200 &&
-							responseCredito?.data?.data
-						) {
-							setDadosRetornoTransacao(responseCredito.data.data.body);
-							setCheckRetornoTransacao(true);
-						} else {
-							try {
-								const response = await AddSaldo(dataCredito, user.numeroConta);
-								if (response.data.status === 200 && response?.data?.data) {
-									//setRecebeStadoSaldo(response.data.data.total);
-								}
-								console.log('terceiro');
-								disparaErro('');
-							} catch (error) {
-								console.log(error);
-								disparaErro('');
-							}
-						}
-						console.log('segundo');
-						setIsOpen(false);
-					} catch (error) {
-						console.log(error);
-						try {
-							const response = await AddSaldo(dataCredito, user.numeroConta);
-							if (response.data.status === 200 && response?.data?.data) {
-								//setRecebeStadoSaldo(response.data.data.total);
-							}
-							console.log('terceiro');
-						} catch (error) {
-							console.log(error);
-						}
-					}
-				} else {
-					console.log('quarto');
-				}
-			} catch (error) {
-				console.log(error);
-				disparaErro('');
-			}
-			
-			toast.error(`Inpisponível`, {
-				position: 'top-center',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'colored',
-			});
-			setIsOpen(false);
-			*/
-		} else {
-			toast.error(`Insira o código`, {
-				position: 'top-center',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'colored',
-			});
-			setIsOpen(false);
-		}
-
+		console.log(contaTemporaria.valor)
+		console.log(valorTransferencia.valor)
+		console.log(agencia.valor)
+		console.log(nomeFavorecido.valor)
+		console.log(docFavorecido.valor)
+		console.log(addFavodecido.valor)
+		console.log(descricao.valor)
+		
 	};
 
-	function disparaErro(paramTexto: string) {
-		toast.error(`Falha na transação`, {
-			position: 'top-center',
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: 'colored',
-		});
-		setIsOpen(false);
-	}
+	
 
-	async function sendToken(tipo: string) {
-		let tipoStringEnvio = '';
-		let dadosTelefoneOuEmail = '';
-		/*
-		switch (tipo) {
-			case 'sms':
-				console.log('tipo codigo', tipo);
-				tipoStringEnvio = 'Telefone';
-				dadosTelefoneOuEmail = user.telefone;
-				console.log('dados pegando aqui ', dadosTelefoneOuEmail);
-				validaSmsOuEmail(tipo, dadosTelefoneOuEmail);
-				break;
+	
 
-			case 'email':
-				console.log('tipo codigo', tipo);
-				tipoStringEnvio = 'email';
-				dadosTelefoneOuEmail = user.telefone;
-				console.log('dados pegando aqui ', dadosTelefoneOuEmail);
-				validaSmsOuEmail(tipo, dadosTelefoneOuEmail);
-
-				break;
-
-			case 'mobile':
-				try {
-					const response = await validaMobile(tipo, '123');
-					if (response.data.status === 200 || response.data.status === 201) {
-						toast.success(
-							`Escaneie o QrCode para obter o codigo de autenticação`,
-							{
-								position: 'top-center',
-								autoClose: 5000,
-								hideProgressBar: false,
-								closeOnClick: true,
-								pauseOnHover: true,
-								draggable: true,
-								progress: undefined,
-								theme: 'colored',
-							}
-						);
-					}
-					setLinkBase64(response?.data?.data?.img_base64);
-					setAbilitaQrCode(true);
-					console.log('dados mobile', response);
-				} catch (error) {
-					console.log(error);
-					if (error instanceof AxiosError) {
-					} else {
-						if (error instanceof TypeError) {
-							console.log('caiu aqui', error);
-							erroRetonoCod = 'BT0001';
-							erroRetonoMensage = 'Erro interno tente mais tarde';
-						}
-					}
-					setIsOpen(false);
-					setAbilitaQrCode(false);
-				}
-				break;
-
-			default:
-				break;
-		}
-		*/
-		if (tipo == 'sms') {
-			console.log('tipo Telefone', user.telefone.replace('+55', ''));
-
-			tipoStringEnvio = 'Telefone';
-			dadosTelefoneOuEmail = user.telefone.replace('+55', '');
-			console.log('dados pegando aqui ', dadosTelefoneOuEmail);
-			validaSmsOuEmail(tipo, dadosTelefoneOuEmail);
-			//setMenssageToken('Insira o código enviado para seu telefone para validar a transação');
-
-		} else {
-			setIsOpen(false);
-			//setMenssageToken('Insira o código gerado pelo GlobalSafy');
-		}
-	}
-
-	async function validaSmsOuEmail(tipo, dadosTelefoneOuEmail) {
-		/*
-		try {
-			const response = await smsOuEmail(tipo, dadosTelefoneOuEmail);
-			if (response.data.status === 200) {
-				let tipoStringEnvio = '';
-
-				if (tipo == 'sms') {
-					tipoStringEnvio = 'Telefone';
-				} else {
-					tipoStringEnvio = 'E-mail';
-				}
-
-				toast.success(
-					`Um código foi enviado para o ${tipoStringEnvio}: ${dadosTelefoneOuEmail}`,
-					{
-						position: 'top-center',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: 'colored',
-					}
-				);
-				setStartPause(true);
-			}
-		} catch (error) {
-			console.log(error);
-			if (error instanceof AxiosError) {
-			} else {
-				if (error instanceof TypeError) {
-					console.log('caiu aqui', error);
-					erroRetonoCod = 'BT0001';
-					erroRetonoMensage = 'Erro interno tente mais tarde';
-				}
-			}
-			setIsOpen(false);
-		}
-		*/
-		try {
-			const response = await veryFiWatZapPhone(tipo, dadosTelefoneOuEmail);
-			if (response.data.status === 200) {
-				//console.log('ERRO', response.data.data.error)
-				if (response.data.data.error) {
-					sendTokenSms(tipo, dadosTelefoneOuEmail);
-				} else {
-					try {
-						const response = await sendTokenWatZap(dadosTelefoneOuEmail);
-
-						if (response.data.status === 200) {
-
-							let tipoStringEnvio = 'Whatsapp';
-
-							toast.success(
-								`Um código foi enviado para o ${tipoStringEnvio}: ${dadosTelefoneOuEmail}`,
-								{
-									position: 'top-center',
-									autoClose: 5000,
-									hideProgressBar: false,
-									closeOnClick: true,
-									pauseOnHover: true,
-									draggable: true,
-									progress: undefined,
-									theme: 'colored',
-								}
-							);
-							setStartPause(true);
-							//setIsLoading(false);
-						} else {
-
-						}
-					} catch (error) {
-						console.log(error);
-						if (error instanceof AxiosError) {
-							console.log('Cod', error);
-							erroRetonoCod = error?.response?.data?.data?.error?.errorCode;
-							erroRetonoMensage = error?.response?.data?.data?.error?.message;
-							return null;
-						} else {
-							if (error instanceof TypeError) {
-								console.log('caiu aqui', error);
-								erroRetonoCod = 'BT0001';
-								erroRetonoMensage = 'Erro interno tente mais tarde';
-							}
-						}
-						//setLoadSpinerModal(false);
-						//setIsLoading(false);
-					}
-				}
-
-			} else {
-				try {
-					const response = await smsOuEmail(tipo, dadosTelefoneOuEmail);
-					if (response.data.status === 200) {
-						let tipoStringEnvio = '';
-
-						if (tipo == 'sms') {
-							tipoStringEnvio = 'Telefone';
-						} else {
-							tipoStringEnvio = 'E-mail';
-						}
-
-						toast.success(
-							`Um código foi enviado para o ${tipoStringEnvio}: ${dadosTelefoneOuEmail}`,
-							{
-								position: 'top-center',
-								autoClose: 5000,
-								hideProgressBar: false,
-								closeOnClick: true,
-								pauseOnHover: true,
-								draggable: true,
-								progress: undefined,
-								theme: 'colored',
-							}
-						);
-						setStartPause(true);
-						//	setIsLoading(false);
-					}
-				} catch (error) {
-					console.log(error);
-					if (error instanceof AxiosError) {
-						console.log('Cod', error);
-						erroRetonoCod = error?.response?.data?.data?.error?.errorCode;
-						erroRetonoMensage = error?.response?.data?.data?.error?.message;
-						return null;
-					} else {
-						if (error instanceof TypeError) {
-							console.log('caiu aqui', error);
-							erroRetonoCod = 'BT0001';
-							erroRetonoMensage = 'Erro interno tente mais tarde';
-						}
-					}
-					//setLoadSpinerModal(false);
-					//setIsLoading(false);
-				}
-			}
-		} catch (error) {
-			console.log(error);
-			if (error instanceof AxiosError) {
-				console.log('Cod', error);
-				erroRetonoCod = error?.response?.data?.data?.error?.errorCode;
-				erroRetonoMensage = error?.response?.data?.data?.error?.message;
-				return null;
-			} else {
-				if (error instanceof TypeError) {
-					console.log('caiu aqui', error);
-					erroRetonoCod = 'BT0001';
-					erroRetonoMensage = 'Erro interno tente mais tarde';
-				}
-			}
-			//setLoadSpinerModal(false);
-			//setIsLoading(false);
-		}
-	}
-
-	async function sendTokenSms(tipo, dadosTelefoneOuEmail) {
-		try {
-			const response = await smsOuEmail(tipo, dadosTelefoneOuEmail);
-			if (response.data.status === 200) {
-				let tipoStringEnvio = '';
-
-				if (tipo == 'sms') {
-					tipoStringEnvio = 'Telefone';
-				} else {
-					tipoStringEnvio = 'E-mail';
-				}
-
-				toast.success(
-					`Um código foi enviado para o ${tipoStringEnvio}: ${dadosTelefoneOuEmail}`,
-					{
-						position: 'top-center',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: 'colored',
-					}
-				);
-				setStartPause(true);
-				//	setIsLoading(false);
-			}
-		} catch (error) {
-			console.log(error);
-			if (error instanceof AxiosError) {
-				console.log('Cod', error);
-				erroRetonoCod = error?.response?.data?.data?.error?.errorCode;
-				erroRetonoMensage = error?.response?.data?.data?.error?.message;
-				return null;
-			} else {
-				if (error instanceof TypeError) {
-					console.log('caiu aqui', error);
-					erroRetonoCod = 'BT0001';
-					erroRetonoMensage = 'Erro interno tente mais tarde';
-				}
-			}
-			//setLoadSpinerModal(false);
-			//setIsLoading(false);
-		}
-	}
 
 	function closeModal(paramModal) {
 		switch (paramModal) {
@@ -619,244 +310,461 @@ export function FormTransferencias({
 	}
 
 	useEffect(() => {
-		setValidaValorTransferencia(valorTr);
-	}, [valorTr]);
 
+		if (acountCode) {
+			handleSearchAcount(decryptID(String(acountCode)))
+		}
+	}, [acountCode]);
+
+	useEffect(() => {
+
+		dispatch(resetUserRegisterData());
+
+
+	}, [dispatch]);
 	return (
 		<div>
-			<form onSubmit={handleSubmit(handleTransfer)}>
-				{/*
-				<Controller
-					control={control}
-					name="valorTransferencia"
-					render={({ field: { onChange, onBlur, value } }) => (
-						<input
-							type="text"
-							onChange={onChange}
-							onBlur={onBlur}
-							value={valorTr}
-							hidden={false}
-							id="boldCheckbox"
-						/>
-					)}
-				/>
 
-				{errors.valorTransferencia && (
-					<p className={styles.erroInputForm}>
-						{errors.valorTransferencia?.message}
-					</p>
-				)}
-				 */}
-				<section className={styles.containerTransferencia}>
-					<div className={styles.tituloGroup}>
-						<h5>Dados bancários</h5>
+			<section className={styles.containerTransferencia}>
+				<div className={styles.tituloGroup}>
+					<h5>Dados bancários</h5>
+				</div>
+				{validaDadosConta == false && (
+					<div className={styles.iputGroup}>
+						<div className={styles.containerInut}>
+							<label>Conta</label>
+							<Controller
+								control={control}
+								name="contaTemporaria"
+								render={({ field: { onChange, onBlur, value } }) => (
+									<InputFormBitClean
+										placeholder="Número da conta"
+										type="text"
+										onChange={(event) => {
+											const inputValue = event.target.value;
+											let isValid = true;
+
+											if (inputValue == '') {
+												isValid = false;
+
+												const auxInvalidFields = [
+													...invalidFields,
+													'contaTemporaria',
+												];
+												setFieldRedux('invalidFields', auxInvalidFields);
+
+											} else {
+
+												isValid = true;
+												const auxInvalidFields = invalidFields.filter(
+													(field: string) => field !== 'contaTemporaria'
+												);
+												setFieldRedux('invalidFields', auxInvalidFields);
+											}
+
+											handleValueChange({
+												name: 'contaTemporaria',
+												valor: inputValue,
+												isValid: isValid,
+												page: 1,
+											});
+										}}
+
+										value={contaTemporaria.valor}
+									/>
+								)}
+
+							/>
+						</div>
+						<div className={styles.containerInutButtom}>
+							<Button
+								type="submit"
+								variant="contained"
+								color="primary"
+								onClick={() => handleNextPage()}
+							>
+								Persquisar
+							</Button>
+						</div>
 					</div>
-					{validaDadosConta == false && (
-						<div className={styles.containerBuscarConta}>
-							<div className={styles.containerInutBuscarConta}>
-								<label>Conta</label>
+
+
+				)}
+				{validaDadosConta == true && (
+					<>
+						<div className={styles.iputGroup}>
+
+							<div className={styles.containerInut}>
+								<label>Agência</label>
 								<Controller
 									control={control}
-									name="contaTemporaria"
+									name="agencia"
 									render={({ field: { onChange, onBlur, value } }) => (
-										<InputFormBit
-											placeholder="Conta"
-											type="text"
-											onChange={(e) => {
+										<InputFormBitClean
+											placeholder="Agência"
+											type="email"
+											readOnly={true}
+											onChange={(event) => {
+												const inputValue = event.target.value;
+												let isValid = true;
 
-												const novoValor = e.target.value;
-												setGetNumberAcount(novoValor);
+												if (inputValue == '') {
+													isValid = false;
 
-												onChange
-											}
-											}
-											onBlur={onBlur}
-											value={value}
+													const auxInvalidFields = [
+														...invalidFields,
+														'agencia',
+													];
+													setFieldRedux('invalidFields', auxInvalidFields);
+
+												} else {
+
+													isValid = true;
+													const auxInvalidFields = invalidFields.filter(
+														(field: string) => field !== 'agencia'
+													);
+													setFieldRedux('invalidFields', auxInvalidFields);
+												}
+
+												handleValueChange({
+													name: 'agencia',
+													valor: inputValue,
+													isValid: true,
+													page: 2,
+												});
+											}}
+
+											value={agencia.valor}
 										/>
 									)}
 								/>
-								{errors.contaTemporaria && (
-									<p className={styles.erroInputForm}>{errors.contaTemporaria?.message}</p>
-								)}
-							</div>
-							<div className={styles.containerbuttomEnviarPix}>
-								<Buttom
-									type="button"
-									onClick={() => handleValidationAcount(getNumbarAcount)}
-									loading={false}
-								>
-									BUSCAR CONTA
-								</Buttom>
 
+							</div>
+							<div className={styles.containerInut}>
+								<label>Conta</label>
+								<Controller
+									control={control}
+									name="numeroConta"
+									render={({ field: { onChange, onBlur, value } }) => (
+										<InputFormBitClean
+											placeholder="Número da conta"
+											type="text"
+											readOnly={true}
+											onChange={(event) => {
+												const inputValue = event.target.value;
+												let isValid = true;
+
+												if (inputValue == '') {
+													isValid = false;
+
+													const auxInvalidFields = [
+														...invalidFields,
+														'numeroConta',
+													];
+													setFieldRedux('invalidFields', auxInvalidFields);
+
+												} else {
+
+													isValid = true;
+													const auxInvalidFields = invalidFields.filter(
+														(field: string) => field !== 'numeroConta'
+													);
+													setFieldRedux('invalidFields', auxInvalidFields);
+												}
+
+												handleValueChange({
+													name: 'numeroConta',
+													valor: inputValue,
+													isValid: isValid,
+													page: 2,
+												});
+											}}
+
+											value={numeroConta.valor}
+										/>
+									)}
+
+								/>
 							</div>
 						</div>
 
+						{/*  /////////////////// */}
 
-					)}
+						<div className={styles.tituloGroup}>
+							<h5>Para quem ?</h5>
+						</div>
+						<div className={styles.iputGroup}>
+							<div className={styles.containerInut}>
+								<label>Nome do favorecido</label>
+								<Controller
+									control={control}
+									name="nomeFavorecido"
+									render={({ field: { onChange, onBlur, value } }) => (
+										<InputFormBitClean
+											placeholder="Nome"
+											type="text"
+											readOnly={true}
+											onChange={(event) => {
+												const inputValue = event.target.value;
+												let isValid = true;
 
-					{validaDadosConta == true && (
-						<>
-							<div className={styles.iputGroup}>
+												if (inputValue == '') {
+													isValid = false;
 
-								<div className={styles.containerInut}>
-									<label>Agência</label>
-									<Controller
-										control={control}
-										name="agencia"
-										render={({ field: { onChange, onBlur, value } }) => (
-											<InputFormBit
-												placeholder="Agência"
-												type="text"
-												onChange={onChange}
-												onBlur={onBlur}
-												value={value}
-											/>
-										)}
-									/>
-									{errors.agencia && (
-										<p className={styles.erroInputForm}>
-											{errors.agencia?.message}
-										</p>
+													const auxInvalidFields = [
+														...invalidFields,
+														'nomeFavorecido',
+													];
+													setFieldRedux('invalidFields', auxInvalidFields);
+
+												} else {
+
+													isValid = true;
+													const auxInvalidFields = invalidFields.filter(
+														(field: string) => field !== 'nomeFavorecido'
+													);
+													setFieldRedux('invalidFields', auxInvalidFields);
+												}
+
+												handleValueChange({
+													name: 'nomeFavorecido',
+													valor: inputValue,
+													isValid: isValid,
+													page: 2,
+												});
+											}}
+
+											value={nomeFavorecido.valor}
+										/>
 									)}
-								</div>
-								<div className={styles.containerInut}>
-									<label>Conta</label>
-									<Controller
-										control={control}
-										name="conta"
-										render={({ field: { onChange, onBlur, value } }) => (
-											<InputFormBit
-												placeholder="Conta"
-												type="text"
-												onChange={onChange}
-												onBlur={onBlur}
-												value={value}
-											/>
-										)}
-									/>
-									{errors.conta && (
-										<p className={styles.erroInputForm}>{errors.conta?.message}</p>
-									)}
-								</div>
+								/>
+
 							</div>
+							<div className={styles.containerInut}>
+								<label>Documento</label>
 
-							{/*  /////////////////// */}
+								<Controller
+									control={control}
+									name="docFavorecido"
+									render={({ field: { onChange, onBlur, value } }) => (
 
-							<div className={styles.tituloGroup}>
-								<h5>Para quem ?</h5>
-							</div>
-							<div className={styles.iputGroup}>
-								<div className={styles.containerInut}>
-									<label>Nome do favorecido</label>
-									<Controller
-										control={control}
-										name="nomeFavorecido"
-										render={({ field: { onChange, onBlur, value } }) => (
-											<InputFormBit
-												placeholder="Nome favorecido"
-												type="text"
-												onChange={onChange}
-												onBlur={onBlur}
-												value={value}
-											/>
-										)}
-									/>
-									{errors.nomeFavorecido && (
-										<p className={styles.erroInputForm}>
-											{errors.nomeFavorecido?.message}
-										</p>
+										<InputFormBitClean
+											placeholder="Número da conta"
+											type="text"
+											readOnly={true}
+											onChange={(event) => {
+												console.log('asdadasdasdasd')
+												const inputValue = virifyCpgCnpj(event.target.value);
+												let isValid = true;
+
+												if (inputValue == '') {
+													isValid = false;
+
+													const auxInvalidFields = [
+														...invalidFields,
+														'docFavorecido',
+													];
+													setFieldRedux('invalidFields', auxInvalidFields);
+
+												} else {
+
+													isValid = true;
+													const auxInvalidFields = invalidFields.filter(
+														(field: string) => field !== 'docFavorecido'
+													);
+													setFieldRedux('invalidFields', auxInvalidFields);
+												}
+
+												handleValueChange({
+													name: 'docFavorecido',
+													valor: inputValue,
+													isValid: isValid,
+													page: 2,
+												});
+											}}
+
+											value={docFavorecido.valor}
+										/>
 									)}
-								</div>
-								<div className={styles.containerInut}>
-									<label>Documento</label>
-									<Controller
-										control={control}
-										name="docFavorecido"
-										render={({ field: { onChange, onBlur, value } }) => (
-											<MaskInput
-												//mask="999.999.999-99"
-												disabled
-												placeholder="CPF/CNPJ"
-												type="text"
-												onChange={onChange}
-												onBlur={onBlur}
-												value={value}
-											/>
-										)}
-									/>
-
-									{errors.docFavorecido && (
-										<p className={styles.erroInputForm}>
-											{errors.docFavorecido?.message}
-										</p>
-									)}
-								</div>
+								/>
 							</div>
+						</div>
 
-							{/*  /////////////////// */}
+						{/*  /////////////////// */}
+						<div className={styles.iputGroup}>
+							<div className={styles.containerInut}>
+								<label>Valor:</label>
+								<Controller
+									control={control}
+									name="valorTransferencia"
+									render={({ field: { onChange, onBlur, value } }) => (
+										<InputFormBitClean
+											placeholder="0,00"
+											type="text"
+											onChange={(event) => {
+												const inputValue = moneyMask(event.target.value);
+												let isValid = true;
 
+												if (inputValue == '') {
+													isValid = false;
+
+													const auxInvalidFields = [
+														...invalidFields,
+														'valorTransferencia',
+													];
+													setFieldRedux('invalidFields', auxInvalidFields);
+
+												} else {
+
+													isValid = true;
+													const auxInvalidFields = invalidFields.filter(
+														(field: string) => field !== 'valorTransferencia'
+													);
+													setFieldRedux('invalidFields', auxInvalidFields);
+												}
+
+												handleValueChange({
+													name: 'valorTransferencia',
+													valor: inputValue,
+													isValid: isValid,
+													page: 2,
+												});
+											}}
+
+											value={valorTransferencia.valor}
+										/>
+									)}
+								/>
+
+							</div>
 							<div className={styles.iputGroupCheckAddFavorites}>
 								<div>
-									<input
-										//className={styles.inputG}
-										{...register('addFavodecido')}
-										placeholder="addFavodecido"
-										type="checkbox"
+									<Controller
 										name="addFavodecido"
+										control={control}
+										defaultValue={false}
+										render={({ field }) => (
+											<Checkbox
+												{...field}
+												onChange={(e) => {
+													const inputValue = e.target.checked;
+													let isValid = true;
+
+													if (!inputValue) {
+														isValid = false;
+														console.log('check', isValid)
+														const auxInvalidFields = [...invalidFields, 'addFavodecido'];
+														setFieldRedux(auxInvalidFields);
+													} else {
+														console.log('check', isValid)
+														const auxInvalidFields = invalidFields.filter(
+															(field) => field !== 'addFavodecido'
+														);
+														setFieldRedux(auxInvalidFields);
+													}
+
+													handleValueChange({
+														name: 'addFavodecido',
+														valor: String(isValid),
+														isValid: isValid,
+														page: 2,
+													});
+												}}
+											/>
+										)}
 									/>
+
 								</div>
 								<div>
 									<label>Adicionar aos favoritos</label>
 								</div>
 							</div>
+						</div>
 
-							{/*  /////////////////// */}
+						{/*  /////////////////// */}
 
 
 
 
-							{/*  /////////////////// */}
+						{/*  /////////////////// */}
 
-							<div className={styles.iputGroup}>
-								<div className={styles.containerInut}>
-									<label>Descrição</label>
-									<Controller
-										control={control}
-										name="descricao"
-										render={({ field: { onChange, onBlur, value } }) => (
-											<MaskInput
-												mask=""
-												placeholder="Descrição"
-												type="text"
-												onChange={onChange}
-												onBlur={onBlur}
-												value={value}
-											/>
-										)}
-									/>
-								</div>
+						<div className={styles.iputGroup}>
+							<div className={styles.containerInut}>
+								<label>Descrição</label>
+								<Controller
+									control={control}
+									name="descricao"
+									render={({ field: { onChange, onBlur, value } }) => (
+										<InputFormBitClean
+											placeholder="Número da conta"
+											type="text"
+											//readOnly={!!dataOrder?.customer?.email}
+											onChange={(event) => {
+												const inputValue = event.target.value;
+												let isValid = true;
+
+												if (inputValue == '') {
+													isValid = false;
+
+													const auxInvalidFields = [
+														...invalidFields,
+														'descricao',
+													];
+													setFieldRedux('invalidFields', auxInvalidFields);
+
+												} else {
+
+													isValid = true;
+													const auxInvalidFields = invalidFields.filter(
+														(field: string) => field !== 'descricao'
+													);
+													setFieldRedux('invalidFields', auxInvalidFields);
+												}
+
+												handleValueChange({
+													name: 'descricao',
+													valor: inputValue,
+													isValid: isValid,
+													page: 2,
+												});
+											}}
+
+											value={descricao.valor}
+										/>
+									)}
+								/>
 							</div>
+						</div>
 
-							{/*  /////////////////// */}
-
-
-
-
-							<div className={styles.ButtomSubmitTransfer}>
-								<Buttom
-									type="submit"
-								//loading={loading}
-								>
-									Transferir
-								</Buttom>
-							</div>
-						</>
-					)}
-
-				</section>
-			</form>
+						{/*  /////////////////// */}
 
 
+
+
+						<div className={styles.ButtomSubmitTransfer}>
+
+							<Button
+								type="submit"
+								variant="contained"
+								color="primary"
+								onClick={() => handleNextPage()}
+							>
+								Transferir
+							</Button>
+							<Button
+								type="submit"
+								variant="contained"
+								color="warning"
+								onClick={() => handleValidationAcount(getNumbarAcount)}
+							>
+								Cancelar
+							</Button>
+
+						</div>
+					</>
+				)}
+
+			</section>
 			<BlockTela isOpen={abreBodalTranfereciaCheckOut} onClose={() => { setAbreBodalTranfereciaCheckOut(!abreBodalTranfereciaCheckOut) }}>
 				<section className={styles.containerModalPixSucesso}>
 					<header className={styles.headerModal}>
@@ -894,8 +802,8 @@ export function FormTransferencias({
 							</p>
 							<p>
 								Conta:
-								{guardaDadosForm?.conta != undefined
-									? guardaDadosForm?.conta
+								{guardaDadosForm?.contaTemporaria != undefined
+									? guardaDadosForm?.contaTemporaria
 									: ''}
 							</p>
 							<p>
@@ -948,6 +856,7 @@ export function FormTransferencias({
 						</p>
 
 						<div className={styles.containerbuttomEnviarPix}>
+							{/*
 							<Buttom
 								type="button"
 								onClick={() => finalizaTrasferencia()}
@@ -955,6 +864,8 @@ export function FormTransferencias({
 							>
 								ENVIAR PIX
 							</Buttom>
+								*/}
+
 							<p>&nbsp;</p>
 							<ButtomWarning
 								type="button"
@@ -970,79 +881,80 @@ export function FormTransferencias({
 				</section>
 			</BlockTela>
 
-			
-					<div className={styles.recebeContainerModal}>
 
-						<BlockTela isOpen={checkRetornoTransacao} onClose={() => { setCheckRetornoTransacao(!checkRetornoTransacao) }}>
-							<section ref={divRef} id="comprovante" className={styles.containerModalPixSucesso}>
-								<header className={styles.headerModal}>
-									<Image
-										className={styles.imgBithLogo}
-										src={getImg('logo.png')}
-										alt="logo"
-									/>
-								</header>
-								<div className={styles.dadosDetalhesPagamento}>
-									<div className={styles.inconePaymentSucces}>
-										<AiFillCheckCircle size={64} color="#32A639" />
-									</div>
-									<div className={styles.tituloSucesso}>
-										<h4>Tranferência efetuada!</h4>
-										<h1>
-											{' '}
-											{dadosRetornoTransacao != undefined
-												? `R$: ${validaValorTransferencia}`
-												: ''}
-										</h1>
-									</div>
-									<div className={styles.detalhamentoComprovante}>
-										<h4>{user?.name ?? ''}</h4>
-										<p>{GetDateNoW()}</p>
-										<p>Id da transação</p>
-										<p>
-											{dadosRetornoTransacao?.id != undefined
-												? dadosRetornoTransacao?.id
-												: ''}
-										</p>
-										<br />
-									</div>
+			<div className={styles.recebeContainerModal}>
 
-									{/* DADOS DE QUEM PAGOU */}
+				<BlockTela isOpen={checkRetornoTransacao} onClose={() => { setCheckRetornoTransacao(!checkRetornoTransacao) }}>
+					<section ref={divRef} id="comprovante" className={styles.containerModalPixSucesso}>
+						<header className={styles.headerModal}>
+							<Image
+								className={styles.imgBithLogo}
+								src={getImg('logo.png')}
+								alt="logo"
+							/>
+						</header>
+						<div className={styles.dadosDetalhesPagamento}>
+							<div className={styles.inconePaymentSucces}>
+								<AiFillCheckCircle size={64} color="#32A639" />
+							</div>
+							<div className={styles.tituloSucesso}>
+								<h4>Tranferência efetuada!</h4>
+								<h1>
+									{' '}
+									{dadosRetornoTransacao != undefined
+										? `R$: ${validaValorTransferencia}`
+										: ''}
+								</h1>
+							</div>
+							<div className={styles.detalhamentoComprovante}>
+								<h4>{user?.name ?? ''}</h4>
+								<p>{GetDateNoW()}</p>
+								<p>Id da transação</p>
+								<p>
+									{dadosRetornoTransacao?.id != undefined
+										? dadosRetornoTransacao?.id
+										: ''}
+								</p>
+								<br />
+							</div>
 
-									<div className={styles.tituloSucesso}>
-										<h4>Quem pagou</h4>
-									</div>
-									<div className={styles.detalhamentoComprovante}>
-										<p>{user?.name != undefined ? user?.name : ''}</p>
-										<p>Agência:{'0001'}</p>
-										<p>
-											Conta:
-											{user?.numeroConta != undefined ? user?.numeroConta : ''}
-										</p>
-									</div>
-									<div className={styles.tituloSucesso}>
-										<h4>Quem recebeu</h4>
-									</div>
-									<div className={styles.detalhamentoComprovante}>
-										<p>
-											{guardaDadosForm?.nomeFavorecido != undefined
-												? guardaDadosForm?.nomeFavorecido
-												: ''}
-										</p>
-										<p>
-											Agência:
-											{guardaDadosForm?.agencia != undefined
-												? guardaDadosForm?.agencia
-												: ''}
-										</p>
-										<p>
-											Conta:
-											{dadosRetornoTransacao?.clientCode != undefined
-												? guardaDadosForm?.conta
-												: ''}
-										</p>
-									</div>
-									<div className={styles.containerbuttomEnviarPix}>
+							{/* DADOS DE QUEM PAGOU */}
+
+							<div className={styles.tituloSucesso}>
+								<h4>Quem pagou</h4>
+							</div>
+							<div className={styles.detalhamentoComprovante}>
+								<p>{user?.name != undefined ? user?.name : ''}</p>
+								<p>Agência:{'0001'}</p>
+								<p>
+									Conta:
+									{user?.numeroConta != undefined ? user?.numeroConta : ''}
+								</p>
+							</div>
+							<div className={styles.tituloSucesso}>
+								<h4>Quem recebeu</h4>
+							</div>
+							<div className={styles.detalhamentoComprovante}>
+								<p>
+									{guardaDadosForm?.nomeFavorecido != undefined
+										? guardaDadosForm?.nomeFavorecido
+										: ''}
+								</p>
+								<p>
+									Agência:
+									{guardaDadosForm?.agencia != undefined
+										? guardaDadosForm?.agencia
+										: ''}
+								</p>
+								<p>
+									Conta:
+									{dadosRetornoTransacao?.clientCode != undefined
+										? guardaDadosForm?.contaTemporaria
+										: ''}
+								</p>
+							</div>
+							<div className={styles.containerbuttomEnviarPix}>
+								{/*
 										<Buttom
 											type="button"
 											//onClick={() => printComprovante('comprovante')}
@@ -1051,22 +963,140 @@ export function FormTransferencias({
 										>
 											GERAR PDF
 										</Buttom>
-										<p>&nbsp;</p>
-										<ButtomWarning
-											type="button"
-											onClick={() => closeModal(2)}
-											loading={false}
-										>
-											FECHAR
-										</ButtomWarning>
-									</div>
-								</div>
-							</section>
-						</BlockTela>
+											*/}
 
-					</div>
-			
+								<p>&nbsp;</p>
+								<ButtomWarning
+									type="button"
+									onClick={() => closeModal(2)}
+									loading={false}
+								>
+									FECHAR
+								</ButtomWarning>
+							</div>
+						</div>
+					</section>
+				</BlockTela>
+
+			</div>
+			{
+				openAlert && (
+					<AlertSnack
+						message={menssageAlert}
+						typeMessage={typeAlert}
+						openAlertComponent={openAlert}
+						onBack={() => { setOpenAlert(!openAlert) }}
+					/>
+				)
+			}
 			{modalIsOpen ? <Spinner /> : ''}
 		</div>
 	);
 }
+
+const mapStateToProps = (state: any) => {
+	return {
+		allFields: getPropSegura(state, ['userRegisterReducer'], {}),
+		invalidFields: getPropSegura(
+			state,
+			['userRegisterReducer', 'invalidFields'],
+			[]
+		),
+
+		contaTemporaria: getPropSegura(
+			state,
+			['userRegisterReducer', 'contaTemporaria'],
+			{
+				valor: '',
+				isValid: false,
+				page: 1,
+			}
+		),
+
+		numeroConta: getPropSegura(
+			state,
+			['userRegisterReducer', 'numeroConta'],
+			{
+				valor: '',
+				isValid: false,
+				page: 2,
+			}
+		),
+
+
+		valorTransferencia: getPropSegura(
+			state,
+			['userRegisterReducer', 'valorTransferencia'],
+			{
+				valor: '',
+				isValid: false,
+				page: 2,
+			}
+		),
+
+
+		agencia: getPropSegura(
+			state,
+			['userRegisterReducer', 'agencia'],
+			{
+				valor: '',
+				isValid: false,
+				page: 2,
+			}
+		),
+
+		nomeFavorecido: getPropSegura(
+			state,
+			['userRegisterReducer', 'nomeFavorecido'],
+			{
+				valor: '',
+				isValid: false,
+				page: 2,
+			}
+		),
+
+		docFavorecido: getPropSegura(
+			state,
+			['userRegisterReducer', 'docFavorecido'],
+			{
+				valor: '',
+				isValid: false,
+				page: 2,
+			}
+		),
+
+		addFavodecido: getPropSegura(
+			state,
+			['userRegisterReducer', 'addFavodecido'],
+			{
+				valor: '',
+				isValid: false,
+				page: 2,
+			}
+		),
+
+		descricao: getPropSegura(
+			state,
+			['userRegisterReducer', 'descricao'],
+			{
+				valor: '',
+				isValid: false,
+				page: 2,
+			}
+		),
+
+	};
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+	return {
+		setFieldRedux: (field: string, value: string) => {
+			dispatch(setUserRegisterField(field, value));
+		},
+		resetUserRegisterDataRedux: () => {
+			dispatch(resetUserRegisterData());
+		},
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormTransferencias);

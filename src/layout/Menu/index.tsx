@@ -69,11 +69,11 @@ export function Menu({ showMenu }: { showMenu: boolean }): React.JSX.Element {
 					)}
 				</Link>
 
-				<Link className={styles.linkMenu} href="/logistas">
+				<Link className={styles.linkMenu} href="/lojistas">
 					<Image
 						className={styles.iconesBith}
 						src={
-							currentUrl === '/logistas'
+							currentUrl === '/lojistas'
 								? IconsBith.ICONBITH.cartoes_menu_azul
 								: IconsBith.ICONBITH.cartoes_menu
 						}
@@ -81,10 +81,10 @@ export function Menu({ showMenu }: { showMenu: boolean }): React.JSX.Element {
 						width="20"
 						height="20"
 					/>
-					{currentUrl === '/logistas' ? (
-						<span className={styles.labelTextMenuAtivo}>Logistas</span>
+					{currentUrl === '/lojistas' ? (
+						<span className={styles.labelTextMenuAtivo}>Lojistas</span>
 					) : (
-						<span className={styles.labelTextMenuInativo}>Logistas</span>
+						<span className={styles.labelTextMenuInativo}>Lojistas</span>
 					)}
 				</Link>
 

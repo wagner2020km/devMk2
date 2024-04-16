@@ -7,11 +7,12 @@ import {
 } from '../../redux/actions/userRegisterActions';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import AlertSnack from '../../components/AlertSnack/AlertSnack'
 import Link from 'next/link';
 import { useMediaQuery } from 'usehooks-ts';
 import Container from '../../layout/Container';
 import { InputFormBitClean, TextArea } from '../../components/ui/InputFormBit';
-import { MdWifiCalling, MdStore, MdStreetview } from "react-icons/md";
+import { MdWifiCalling, MdStore, MdStreetview, MdSecurity } from "react-icons/md";
 import ExportToExcel from '../../components/ExportToExcel/ExportToExcel'
 import { Spinner } from '../../components/Spinner/Spinner';
 import Select from 'react-select';
@@ -64,6 +65,8 @@ import {
 } from '../../validacoes/DataBr';
 
 import { validaDiaDoMes, pegaHoraMinuto } from '../../utils/GetDate';
+import { FaEdit, FaKey } from 'react-icons/fa';
+import { AiFillProfile } from 'react-icons/ai';
 
 interface ListExtratoProps {
 	id: number;
@@ -78,6 +81,7 @@ interface ListExtratoProps {
 type dadosInputGFormProps = {
 	selectStatus: number;
 	selectPerfil: number;
+	cep: string
 	rua: string;
 	bairro: string;
 	numero: string;
@@ -179,6 +183,7 @@ const dadosPerfil = (props: any) => {
 		allFields,
 		selectStatus,
 		selectPerfil,
+		cep,
 		rua,
 		bairro,
 		numero,
@@ -307,16 +312,24 @@ const dadosPerfil = (props: any) => {
 										<MenuList>
 											<MenuItem onClick={() => { handleClickOpen(1) }}>
 												<ListItemIcon>
-													<Edit fontSize="small" />
+													<FaEdit size={20} color="#0fa89f" />
 												</ListItemIcon>
 												<ListItemText>Editar dados</ListItemText>
 
 											</MenuItem >
 											<MenuItem onClick={() => { handleClickOpen(2) }}>
 												<ListItemIcon>
-													<ContentCopy fontSize="small" />
+													<AiFillProfile size={20} color="#0fa89f" />
+
 												</ListItemIcon>
 												<ListItemText>Alterar status</ListItemText>
+
+											</MenuItem>
+											<MenuItem onClick={() => { handleClickOpen(2) }}>
+												<ListItemIcon>
+													<FaKey size={20} color="#0fa89f" />
+												</ListItemIcon>
+												<ListItemText>Alterar senha</ListItemText>
 
 											</MenuItem>
 										</MenuList>
@@ -425,7 +438,7 @@ const dadosPerfil = (props: any) => {
 													<Typography variant="h6" gutterBottom>Telefone fixo:</Typography>
 												</Grid>
 												<Grid item xs>
-													<Typography noWrap>Cliente</Typography>
+													<Typography noWrap>Não informado</Typography>
 												</Grid>
 											</Grid>
 										</Box>
@@ -469,7 +482,7 @@ const dadosPerfil = (props: any) => {
 								<div className={styles.contentDataForm}>
 									<div className={styles.formSearch}>
 										<div className={styles.containerInut}>
-											<h4>E-mail</h4>
+											<h4>E-mail:</h4>
 											<Controller
 												control={control}
 												name="rua"
@@ -514,7 +527,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h4>Telefone fixo</h4>
+											<h4>Telefone fixo:</h4>
 											<Controller
 												control={control}
 												name="rua"
@@ -559,7 +572,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h4>Telefone Celular</h4>
+											<h4>Telefone Celular:</h4>
 											<Controller
 												control={control}
 												name="rua"
@@ -606,7 +619,54 @@ const dadosPerfil = (props: any) => {
 									</div>
 									<div className={styles.formSearch}>
 										<div className={styles.containerInut}>
-											<h4>Bairro</h4>
+											<h4>Cep:</h4>
+											<Controller
+												control={control}
+												name="cep"
+												render={({ field: { onChange, onBlur, value } }) => (
+													<InputFormBitClean
+														placeholder="Cep"
+														type="text"
+														//readOnly={!!dataOrder?.customer?.email}
+														onChange={(event) => {
+															const inputValue = event.target.value;
+															let isValid = true;
+
+															if (inputValue == '') {
+																isValid = false;
+
+																const auxInvalidFields = [
+																	...invalidFields,
+																	'cep',
+																];
+																setFieldRedux('invalidFields', auxInvalidFields);
+
+															} else {
+
+																isValid = true;
+																const auxInvalidFields = invalidFields.filter(
+																	(field: string) => field !== 'cep'
+																);
+																setFieldRedux('invalidFields', auxInvalidFields);
+															}
+
+															handleValueChange({
+																name: 'cep',
+																valor: inputValue,
+																isValid: isValid,
+																page: 1,
+															});
+														}}
+
+														value={cep.valor}
+													/>
+												)}
+											/>
+										</div>
+									</div>
+									<div className={styles.formSearch}>
+										<div className={styles.containerInut}>
+											<h4>Bairro:</h4>
 											<Controller
 												control={control}
 												name="bairro"
@@ -651,7 +711,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h4>Rua</h4>
+											<h4>Rua:</h4>
 											<Controller
 												control={control}
 												name="rua"
@@ -696,7 +756,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h4>Número</h4>
+											<h4>Número:</h4>
 											<Controller
 												control={control}
 												name="numero"
@@ -741,7 +801,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h4>Complemento</h4>
+											<h4>Complemento:</h4>
 											<Controller
 												control={control}
 												name="complemento"
@@ -788,7 +848,7 @@ const dadosPerfil = (props: any) => {
 									</div>
 									<div className={styles.formSearch}>
 										<div className={styles.containerInut}>
-											<h4>Cidade</h4>
+											<h4>Cidade:</h4>
 											<Controller
 												control={control}
 												name="cidade"
@@ -833,7 +893,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h4>Estado</h4>
+											<h4>Estado:</h4>
 											<Controller
 												control={control}
 												name="estado"
@@ -878,7 +938,7 @@ const dadosPerfil = (props: any) => {
 											/>
 										</div>
 										<div className={styles.containerInut}>
-											<h4>Perfil</h4>
+											<h4>Perfil:</h4>
 											<Controller
 												control={control}
 												name="selectPerfil"
@@ -1156,6 +1216,15 @@ const mapStateToProps = (state: any) => {
 			}
 		),
 
+		cep: getPropSegura(
+			state,
+			['userRegisterReducer', 'cep'],
+			{
+				valor: '',
+				isValid: false,
+				page: 1,
+			}
+		),
 		rua: getPropSegura(
 			state,
 			['userRegisterReducer', 'rua'],

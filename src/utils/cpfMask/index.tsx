@@ -58,7 +58,36 @@ export const moneyMask = (value: string) => {
 	
 };
 
+export const moneyMaskNumber = (value: number) => {
+	return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+  };
 
+  
+  export const moneyMaskNumberSerBrl = (value: number) => {
+	 // Remove caracteres não numéricos, exceto ponto decimal
+	 const numericValue = String(value).replace(/[^0-9.]/g, '');
+
+	 
+    // Verifica se o valor é um número válido
+    const parsedValue = parseFloat(numericValue);
+    if (isNaN(parsedValue)) {
+      return ''; // Retorna uma string vazia se não for um número válido
+    }
+
+    // Arredonda o valor para duas casas decimais
+    const roundedValue = parsedValue.toFixed(2);
+
+    // Separa a parte inteira e a parte decimal
+    const [integerPart, decimalPart] = roundedValue.split('.');
+
+    // Adiciona vírgulas como separador de milhar
+    const integerWithCommas = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Formata o valor final com vírgula como separador decimal
+    const formattedCurrency = `${integerWithCommas}.${decimalPart}`;
+
+    return formattedCurrency;
+  };
 export const prrintValorMonetario = (value: string) => {
 	if (value) {
         let valor = value.replace(',', ''); // Remover qualquer vírgula existente para garantir que ela não seja considerada como separador decimal

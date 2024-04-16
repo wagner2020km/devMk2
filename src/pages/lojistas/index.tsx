@@ -5,6 +5,8 @@ import {
 	resetUserRegisterData,
 	setUserRegisterField,
 } from '../../redux/actions/userRegisterActions';
+
+import Router from 'next/router';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
@@ -19,7 +21,7 @@ import { getExtratos } from '../../api/extrato';
 import { InputFormBitClean } from '../../components/ui/InputFormBit';
 import ProtectedPage from '../../components/ProtectedPage/ProtectedPage'
 import styles from './styles.module.scss';
-
+import { encryptID } from '../../utils/encryptId';
 import Extrato from '../../lib/bibliotecaBit/icons/Extrato';
 import { moneyMask } from '../../utils/cpfMask';
 import Pagination from '../../components/Pagination/Pagination';
@@ -113,7 +115,7 @@ const dataLogistaJson = [
 		label: 'Daniel',
 	}
 ]
-const Logista = (props: any) => {
+const Lojista = (props: any) => {
 	const user = useSelector((state: any) => state.userReducer.user);
 	const saldo = useSelector((state: any) => state.saldoReducer.saldo);
 	const isMobile = useMediaQuery('(max-width: 600px)');
@@ -370,7 +372,17 @@ const Logista = (props: any) => {
 														<TableCell align="left">{row.logista}</TableCell>
 														<TableCell align="left">{moneyMask(String(row.saldo))}</TableCell>
 														<TableCell align="right">
-															<Button type="submit" variant="contained" color="warning">
+															<Button
+																variant="contained"
+																color="warning"
+																onClick={() => {
+
+																	Router.push({
+																		pathname: '/transferencia',
+																		query: { acountCode: encryptID(5585) }
+																	});
+																}}															
+															>
 																Visualizar
 															</Button>
 														</TableCell>
@@ -405,10 +417,10 @@ const Logista = (props: any) => {
 												</div>
 												<div className={styles.itemContainer}>
 													<Typography variant="subtitle1" >
-														
+
 														<span className={styles.label}>NOME:</span>{row.logista}
-														
-														
+
+
 													</Typography>
 												</div>
 												<div className={styles.itemContainer}>
@@ -417,7 +429,16 @@ const Logista = (props: any) => {
 													</Typography>
 												</div>
 												<div className={styles.itemContainer}>
-													<Button variant="contained" color="warning">
+													<Button
+														variant="contained"
+														color="warning"
+														onClick={() => {
+															Router.push({
+																pathname: '/transferencia',
+																query: { acountCode: encryptID(2202114) }
+															});
+														}}	
+													>
 														Visualizar
 													</Button>
 												</div>
@@ -449,7 +470,7 @@ const Logista = (props: any) => {
 				</div>
 			</ProtectedPage>
 
-		</Container>
+		</Container >
 	);
 }
 
@@ -486,4 +507,4 @@ const mapDispatchToProps = (dispatch: any) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Logista);
+export default connect(mapStateToProps, mapDispatchToProps)(Lojista);

@@ -221,7 +221,7 @@ export default function Home() {
 							}}
 							enable={true}
 						/>
-						
+
 						<Minicards
 							nomeIcon={IconsBith.ICONBITH.cartoes}
 							tituloCard="Cartôes"
@@ -264,15 +264,15 @@ export default function Home() {
 							onClick={() => { }}
 							enable={false}
 						/>
-						
+
 					</div>
 					<div className={styles.containerCardAcesso}>
-					<Minicards
+						<Minicards
 							nomeIcon={IconsBith.ICONBITH.depositar}
 							///tituloCard="Depositar"
 							tituloCard="Vendas"
 							caminhoRef="/extratoVendas"
-							onClick={() => { 
+							onClick={() => {
 								handleRedirect('/extratoVendas');
 							}}
 							enable={true}
@@ -282,7 +282,7 @@ export default function Home() {
 							///tituloCard="Depositar"
 							tituloCard="Simulador"
 							caminhoRef="/simulador"
-							onClick={() => { 
+							onClick={() => {
 								handleRedirect('/simulador');
 							}}
 							enable={true}
@@ -347,7 +347,13 @@ export default function Home() {
 								<div className={styles.dividader}></div>
 
 								<div className={styles.textOptionlimit}>
-									<Link className={styles.linkOptionsPix} href="">
+									<Link
+										className={styles.linkOptionsPix}
+										href="/dailyLimit"
+										onClick={() => {
+											setIsOpen(true);
+										}}
+									>
 										<p>Meus Limites PIX</p>
 									</Link>
 								</div>
@@ -537,7 +543,7 @@ export default function Home() {
 							<div className={styles.cardTextos}>
 								<p className={styles.textMaquininha}>Quer uma maquininha?</p>
 								<p className={styles.descricaoMaquinhinha}>
-								{publicidadeMaquina?.descricao}
+									{publicidadeMaquina?.descricao}
 								</p>
 								<p className={styles.descricaoMaquinhinha}>
 									<Link className={styles.linkMenu} href={`${publicidadeMaquina?.rota_web}`}>
