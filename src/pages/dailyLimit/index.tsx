@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import IconPix from '../../components/IconesBith/IconPix';
 import IconTRansfer from '../../components/IconesBith/IconTRansfer';
@@ -11,6 +12,8 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
+
+import { getLimit } from '../../api/limitTransacoes';
 
 import AlertSnack from '../../components/AlertSnack/AlertSnack'
 import Container from '../../layout/Container';
@@ -26,6 +29,7 @@ import {
 import { connect } from 'react-redux';
 import getPropSegura from '../../utils/getPropSegura';
 import { useDispatch } from 'react-redux';
+import { FaCommentsDollar } from 'react-icons/fa';
 // Marks com valores monetários formatados
 const marks = [
   { value: 0.00, label: moneyMaskNumber(0.00) },
@@ -118,6 +122,18 @@ const DailyLimit = (props: any) => {
     mode: 'onChange',
 
   });
+
+
+  async function limitTransacoes() {
+		try {
+			const response = await getLimit();
+			if (response.data.status === 200) {
+				console.log('dados limites', response.data)
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
   const handleValueChange = ({ name, valor, isValid, page }: {
     name: string;
@@ -239,11 +255,18 @@ const DailyLimit = (props: any) => {
   };
 
   useEffect(() => {
-
+    limitTransacoes()
     dispatch(resetUserRegisterData());
 
 
   }, [dispatch]);
+
+  useEffect(() => {
+    limitTransacoes()
+   
+
+
+  }, []);
 
   return (
     <Container>

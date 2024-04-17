@@ -28,7 +28,7 @@ const _apiCliente = (nameProject: ProjectName) => {
 			case 'bithive':
 				return 'https://bitbankapi.bithive.com.br/api/v1';
 			case 'globalPay':
-				return 'https://apisandbox.globalpaysolucoes.com.br/api/v1';
+				return 'http://localhost:8080/api/graphic-accounts/v1';
 			case 'itsPay':
 				return 'https://apisandboxistpay.bifrost.inf.br/api/v1';
 			default:

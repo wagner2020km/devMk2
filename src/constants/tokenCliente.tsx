@@ -41,7 +41,7 @@ const _tokenCliente = (nameProject: ProjectName) => {
 			case 'bithive':
 				return 'd4c9a74c-55a9-4315-a9a9-628bbd21fd03';
 			case 'globalPay':
-				return 'd110342f-c7aa-4d37-be56-4cc5de405132';
+				return 'd47e5458-74ee-479e-9581-54f940ef333d';
 			case 'itsPay':
 				return 'd47e5458-74ee-479e-9581-54f940ef333d';
 			default:
