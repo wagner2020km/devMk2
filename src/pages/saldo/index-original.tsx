@@ -1,13 +1,8 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+
 import Link from 'next/link';
-import {
-	resetUserRegisterData,
-	setUserRegisterField,
-} from '../../redux/actions/userRegisterActions';
-import { connect } from 'react-redux';
-import getPropSegura from '../../utils/getPropSegura';
+
 import Container from '../../layout/Container';
 import { Minicards } from '../../components/MiniCads/MiniCards';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -57,16 +52,17 @@ import {
 
 import {validaDiaDoMes, pegaHoraMinuto} from '../../utils/GetDate';
 
-type dadosInputGFormProps = {
-	dataInicio: number;
-	dataFim: number;
-	selectTypeTransction: number;
+interface ListExtratoProps {
+	id: number;
+	agencia: number;
+	conta_corrente: string;
+	nome?: string;
+	sigla: string;
+	tipo_transacao: string;
+	valor: number;
+}
 
-};
-
-
-const Saldo = (props: any) => {
-//export default function Saldo() {
+export default function Saldo() {
 	const user = useSelector((state: any) => state.userReducer.user);
 	const saldo = useSelector((state: any) => state.saldoReducer.saldo);
 
@@ -96,29 +92,6 @@ const Saldo = (props: any) => {
 	const [days, setDays] = useState<Date[] | undefined>(initialDays);
 	const date = new Date();
 	//console.log('Data atual',format(date, 'dd/MM/yyyy'))
-
-	const {
-		allFields,
-		selectLogista,
-		selectStatus,
-		selectPerfil,
-		setFieldRedux,
-		invalidFields,
-		resetUserRegisterDataRedux,
-	} = props;
-
-	const {
-		control,
-		register,
-		handleSubmit,
-		setValue,
-		reset,
-		formState: { errors },
-	} = useForm<dadosInputGFormProps>({
-		mode: 'onChange',
-
-	});
-
 	const limitPage = 10;
 	let dataCompara = '';
 
@@ -182,7 +155,6 @@ const Saldo = (props: any) => {
 				setInputDateTextEnd('');
 				setTypeSearch('');
 				setActualPage(1);
-
 
 				setInputDateTextStart('');
 				setInputDateTextEnd('');
@@ -706,58 +678,3 @@ const Saldo = (props: any) => {
 		</Container>
 	);
 }
-
-const mapStateToProps = (state: any) => {
-	return {
-		allFields: getPropSegura(state, ['userRegisterReducer'], {}),
-		invalidFields: getPropSegura(
-			state,
-			['userRegisterReducer', 'invalidFields'],
-			[]
-		),
-
-		selectLogista: getPropSegura(
-			state,
-			['userRegisterReducer', 'selectLogista'],
-			{
-				valor: '',
-				isValid: false,
-				page: 1,
-			}
-		),
-
-		selectStatus: getPropSegura(
-			state,
-			['userRegisterReducer', 'selectStatus'],
-			{
-				valor: '',
-				isValid: false,
-				page: 1,
-			}
-		),
-
-		selectPerfil: getPropSegura(
-			state,
-			['userRegisterReducer', 'selectPerfil'],
-			{
-				valor: '',
-				isValid: false,
-				page: 1,
-			}
-		),
-
-	};
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-	return {
-		setFieldRedux: (field: string, value: string) => {
-			dispatch(setUserRegisterField(field, value));
-		},
-		resetUserRegisterDataRedux: () => {
-			dispatch(resetUserRegisterData());
-		},
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Saldo);

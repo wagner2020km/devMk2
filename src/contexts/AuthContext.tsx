@@ -32,6 +32,11 @@ type UserProps = {
 	tipo_auth_transacao: string;
 	situacao: string;
 	nomeSituacao: string;
+	limite_pix_dia: number;
+	limite_pix_noite: number;
+	limite_tranferencia_dia: number;
+	limite_tranferencia_noite: number
+
 };
 
 type SignInProps = {
@@ -53,13 +58,13 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-	
+
 	const dispatch = useDispatch();
 	const [user, setUser] = useState<UserProps>();
 	const isAuthenticated = !!user;
 
 	function signOut() {
-	
+
 		try {
 			dispatch(resetSaldoData());
 			dispatch(resetDataUser());
@@ -68,7 +73,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 			setCookie(undefined, '@nextauth.token', '', {
 				maxAge: 1, // 1 second, or any short duration
 				path: '/',
-			  });
+			});
 			Router.push('/');
 		} catch (e) {
 			console.log('erro ao deslogar');
@@ -93,14 +98,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 		try {
 			const response = await api.post('/login', dados);
 			const { token, expire_in } = response.data;
-		
-		
+
+
 			setCookie(undefined, '@nextauth.token', token, {
 				maxAge: expire_in,
 				path: '/',
 			});
-			
-		
+
+
 			let nomeUser = '';
 			if (response.data.nome != '') {
 				nomeUser = response.data.usuario_conta.nome;
@@ -114,7 +119,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 					nomeUser = `${tmp[0]}`;
 				}
 			}
-
+			console.log('DADOS LOGIN', response.data)
 			setUser({
 				id: response.data.usuario_conta.id,
 				name: nomeUser,
@@ -128,6 +133,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 				tipo_auth_transacao: response.data.usuario_conta.tipo_auth_transacao,
 				situacao: response.data.usuario_conta.situacao.sigla,
 				nomeSituacao: response.data.usuario_conta.situacao.nome,
+				limite_pix_dia: response.data.usuario_conta.limite_pix_dia,
+				limite_pix_noite: response.data.usuario_conta.limite_pix_noite,
+				limite_tranferencia_dia: response.data.usuario_conta.limite_tranferencia_dia,
+				limite_tranferencia_noite: response.data.usuario_conta.limite_tranferencia_noite,
 			});
 
 			dispatch(
@@ -144,6 +153,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 					tipo_auth_transacao: response.data.usuario_conta.tipo_auth_transacao,
 					situacao: response.data.usuario_conta.situacao.sigla,
 					nomeSituacao: response.data.usuario_conta.situacao.nome,
+					limite_pix_dia: response.data.usuario_conta.limite_pix_dia,
+					limite_pix_noite: response.data.usuario_conta.limite_pix_noite,
+					limite_tranferencia_dia: response.data.usuario_conta.limite_tranferencia_dia,
+					limite_tranferencia_noite: response.data.usuario_conta.limite_tranferencia_noite,
 				})
 			);
 
@@ -165,16 +178,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
 					Router.push('/aguardando');
 					break;
 
-					case 'pedi':
-						Router.push('/aguardando');
-						break;
-			
+				case 'pedi':
+					Router.push('/aguardando');
+					break;
+
 				default:
 					Router.push('/home');
 					break;
 			}
-			
-			
+
+
 		} catch (error) {
 			let menssageErro = '';
 			if (error instanceof AxiosError) {

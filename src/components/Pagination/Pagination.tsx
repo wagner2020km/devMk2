@@ -20,7 +20,8 @@ const Pagination = ({
 	const pages = Math.ceil(total / limit);
 	const first = Math.max(current - MAX_LEFT, 1);
 
-	//console.log('Pages', pages)
+	console.log('Pages', limit)
+	console.log('Pages', total)
 	//console.log('paginaCorreta', current)
 	//console.log('primeira pagina',first)
 	function onPageChange(page) {

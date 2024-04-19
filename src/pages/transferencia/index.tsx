@@ -19,7 +19,6 @@ import Router from 'next/router';
 import { getSaldo } from '../../api/carteira';
 import { numeroParaReal } from '../../utils/maks';
 import 'react-tabs/style/react-tabs.css';
-
 import styles from './styles.module.scss';
 
 export default function Transferencia() {

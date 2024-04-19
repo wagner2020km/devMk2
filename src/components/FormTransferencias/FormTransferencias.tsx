@@ -42,6 +42,7 @@ import { BlockTela } from '../../components/BlockTela/BlockTela';
 import { printComprovante } from '../../utils/printComprovante'
 import { geraPdfComprovante } from '../../utils/comprovantePdf'
 import styles from './styles.module.scss';
+import {getDadosContaGrafica} from '../../api/contasGraficas'
 
 
 type dadosInputGFormProps = {
@@ -218,7 +219,6 @@ const FormTransferencias = (props: any) => {
 	};
 
 
-
 	async function handleValidationAcount(dataAcount: any) {
 		setIsOpen(true);
 
@@ -258,15 +258,41 @@ const FormTransferencias = (props: any) => {
 	const handleSearchAcount = async (numberAcount: any) => {
 
 		console.log('Recebe numero conta para pewsuisa', numberAcount)
-		if (numberAcount == 5585) {
-			handleValueChange({
-				name: 'numeroConta',
-				valor: numberAcount,
-				isValid: true,
-				page: 2,
-			});
-			setNpagina(2)
+		
+		try {
+			const response = await getDadosContaGrafica(numberAcount);
+			if (response.data.status === 200 ) {
+				console.log(response.data)
+				handleValueChange({
+					name: 'agencia',
+					valor: '0001',
+					isValid: true,
+					page: 2,
+				});
+				handleValueChange({
+					name: 'numeroConta',
+					valor: numberAcount,
+					isValid: true,
+					page: 2,
+				});
+				handleValueChange({
+					name: 'nomeFavorecido',
+					valor: response?.data?.data?.nomeCliente,
+					isValid: true,
+					page: 2,
+				});
+				handleValueChange({
+					name: 'docFavorecido',
+					valor: response?.data?.data?.documento,
+					isValid: true,
+					page: 2,
+				});
+				
+				setNpagina(2)
 			setValidaDadosConta(true);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 
 	}

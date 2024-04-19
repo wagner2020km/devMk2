@@ -12,8 +12,8 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
-
-import { getLimit } from '../../api/limitTransacoes';
+import { Spinner } from '../../components/Spinner/Spinner';
+import { getLimit, updatetLimit } from '../../api/limitTransacoes';
 
 import AlertSnack from '../../components/AlertSnack/AlertSnack'
 import Container from '../../layout/Container';
@@ -46,6 +46,14 @@ type dadosInputGFormProps = {
 
 };
 
+type limitProp ={
+  limite_pix_dia: number;
+  limite_pix_noite: number;
+  limite_tranferencia_dia: number;
+  limite_tranferencia_noite: number;
+  typeLimit: string;
+
+}
 // Estilização customizada para o Slider
 const PrettoSlider = styled(Slider)({
   color: '#0fa49b',
@@ -95,6 +103,8 @@ const DailyLimit = (props: any) => {
   const [limiteTrasNoturno, setLimiteTrasNoturno] = useState<number>(0);
   const [limitePixDiario, setLimitePixDiario] = useState<number>(0);
   const [limitePixNoturno, setLimitePixNoturno] = useState<number>(0);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [dataLimit, setDataLimit] = useState<limitProp>();
   const [openAlert, setOpenAlert] = useState(false);
   const [nPagina, setNpagina] = useState(1);
   const [menssageAlert, setMenssageAlert] = useState('');
@@ -123,14 +133,61 @@ const DailyLimit = (props: any) => {
 
   });
 
-
   async function limitTransacoes() {
 		try {
 			const response = await getLimit();
 			if (response.data.status === 200) {
 				console.log('dados limites', response.data)
+        handleValueChange({
+          name: 'valorTransferDia',
+          valor: String(response.data.data.limite_tranferencia_dia),
+          isValid: response.data.data.limite_tranferencia_dia == 0 ? false : true,
+          page: 1,
+        });
+        handleValueChange({
+          name: 'valorTransferNoite',
+          valor: String(response.data.data.limite_tranferencia_noite),
+          isValid: response.data.data.limite_tranferencia_noite == 0 ? false : true,
+          page: 1,
+        });
+        handleValueChange({
+          name: 'valorPixDia',
+          valor: String(response.data.data.limite_pix_dia),
+          isValid: response.data.data.limite_pix_dia == 0 ? false : true,
+          page: 2,
+        });
+        handleValueChange({
+          name: 'valorPixNoite',
+          valor: String(response.data.data.limite_pix_noite),
+          isValid: response.data.data.limite_pix_noite == 0 ? false : true,
+          page: 2,
+        });
+  
 			}
 		} catch (error) {
+			console.log(error);
+		}
+	}
+
+  async function handlePutLimit(paramTypeLimit: string) {
+    setModalIsOpen(true);
+    const dataLimit ={
+      "conta": "300542412691",
+	    "limitTransferDiario": valorTransferDia.valor,
+	    "limitTransferNoturno": valorTransferNoite.valor,
+	    "limitPixDiario": valorPixDia.valor,
+	    "limitPixNoturno": valorPixNoite.valor,
+	    "typeLimit": paramTypeLimit
+    }
+
+		try {
+			const response = await updatetLimit(dataLimit);
+			if (response.data.status === 200) {
+        handleClick('Limit de transferências atualizados', 'success');
+        setModalIsOpen(false);
+			}
+		} catch (error) {
+      setModalIsOpen(false);
 			console.log(error);
 		}
 	}
@@ -196,12 +253,12 @@ const DailyLimit = (props: any) => {
 
     if (numberPage === 1) {
       if (isValidsFields) {
-        alert('salva valor transferência')
+        handlePutLimit('T');
       }
     }
     if (numberPage === 2) {
       if (isValidsFields) {
-        alert('salva valor pix')
+        handlePutLimit('P');
       }
     }
   };
@@ -214,44 +271,89 @@ const DailyLimit = (props: any) => {
 
   const handleChangeTrasferDay = (event: Event, newValue: number | number[]) => {
     console.log('valor diario', newValue)
-    handleValueChange({
-      name: 'valorTransferDia',
-      valor: String(newValue),
-      isValid: true,
-      page: 1,
-    });
-    setLimiteTrasDiario(newValue as number);
+    if(newValue == 0){
+      handleClick('O valor da transferência diária deve ser maior que 0,00', 'error');
+      handleValueChange({
+        name: 'valorTransferDia',
+        valor: String(newValue),
+        isValid: false,
+        page: 1,
+      });
+    }else{
+      handleValueChange({
+        name: 'valorTransferDia',
+        valor: String(newValue),
+        isValid: true,
+        page: 1,
+      });
+      setLimiteTrasDiario(newValue as number);
+    }
+  
   };
 
   const handleChangeTransferNigth = (event: Event, newValue: number | number[]) => {
     console.log('valor noturno', newValue)
-    handleValueChange({
-      name: 'valorTransferNoite',
-      valor: String(newValue),
-      isValid: true,
-      page: 1,
-    });
-    setLimiteTrasNoturno(newValue as number);
+    if(newValue == 0){
+      handleClick('O valor da transferência noturna deve ser maior que 0,00', 'error');
+      handleValueChange({
+        name: 'valorTransferNoite',
+        valor: String(newValue),
+        isValid: false,
+        page: 1,
+      });
+    }else{
+      handleValueChange({
+        name: 'valorTransferNoite',
+        valor: String(newValue),
+        isValid: true,
+        page: 1,
+      });
+      setLimiteTrasNoturno(newValue as number);
+    }
   };
 
   const handleChangePixDay = (event: Event, newValue: number | number[]) => {
-    handleValueChange({
-      name: 'valorPixDia',
-      valor: String(newValue),
-      isValid: true,
-      page: 1,
-    });
-    setLimitePixDiario(newValue as number);
+   
+    if(newValue == 0){
+      handleClick('O valor da pix noturno deve ser maior que 0,00', 'error');
+      handleValueChange({
+        name: 'valorPixDia',
+        valor: String(newValue),
+        isValid: false,
+        page: 1,
+      });
+    }else{
+      handleValueChange({
+        name: 'valorPixDia',
+        valor: String(newValue),
+        isValid: true,
+        page: 1,
+      });
+      setLimitePixDiario(newValue as number);
+    }
+
+    
   };
 
   const handleChangePixNigth = (event: Event, newValue: number | number[]) => {
-    handleValueChange({
-      name: 'valorPixNoite',
-      valor: String(newValue),
-      isValid: true,
-      page: 1,
-    });
-    setLimitePixNoturno(newValue as number);
+
+    if(newValue == 0){
+      handleClick('O valor da pix noturno deve ser maior que 0,00', 'error');
+      handleValueChange({
+        name: 'valorPixNoite',
+        valor: String(newValue),
+        isValid: false,
+        page: 1,
+      });
+    }else{
+      handleValueChange({
+        name: 'valorPixNoite',
+        valor: String(newValue),
+        isValid: true,
+        page: 1,
+      });
+      setLimitePixNoturno(newValue as number);
+    }
   };
 
   useEffect(() => {
@@ -423,6 +525,7 @@ const DailyLimit = (props: any) => {
           </Typography>
         </Alert>
       </Stack>
+      {modalIsOpen ? <Spinner /> : null}
       {
         openAlert && (
           <AlertSnack

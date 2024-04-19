@@ -4,20 +4,20 @@ import MenssageError from '../MenssageError/MenssageError'
 import { AuthContext } from '../../contexts/AuthContext';
 import { useSelector } from 'react-redux';
 
-const ProtectedPage = ({ children, errorMessage, errorType, page }) => {
-    
+const ProtectedPage = ({ children, errorMessage, errorType, page, enableError }) => {
+    console.log('asdsadasd', enableError)
   const router = useRouter();
   //const [session, loading] = useSession();
   const { signOut} = useContext(AuthContext);
   const user = useSelector((state: any) => state.userReducer.user);
-  const [valida, setValida] = useState(false);
+  const [valida, setValida] = useState(enableError);
 
   const protect = () =>{
     if (user.perfilid == 8) {
         console.log('retorno verdadeiro')
-        setValida(true)
+      //  setValida(true)
       }else{
-        setValida(false);
+       // setValida(false);
         console.log('retorno falso')
       }
   }
@@ -26,7 +26,7 @@ const ProtectedPage = ({ children, errorMessage, errorType, page }) => {
   }, [setValida, router]);
 
   // Renderizar children somente se o usuário estiver autenticado
-  return valida ? children : <MenssageError
+  return enableError == false ? children : <MenssageError
   message={errorMessage}
   typeMessage='error'
  textAlert='Erro'
